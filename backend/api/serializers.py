@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import Post
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+    
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'user', 'image', 'caption', 'created', 'liked_by']
+        read_only_fields = ['id', 'created']
