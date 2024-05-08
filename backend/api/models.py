@@ -5,6 +5,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 def validate_image_size(image):
+    if not image:
+        return  # Eğer image `null` ise hiçbir şey yapma
+    
     max_size_kb = 5120  # 5 MB
     if image.size > max_size_kb * 1024:
         raise ValidationError(f"Max image size is {max_size_kb} KB!")

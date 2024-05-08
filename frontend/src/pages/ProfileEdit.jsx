@@ -59,13 +59,20 @@ function ProfileEdit() {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("bio", bio);
-		formData.append("profile_picture", profilePicture);
-		formData.append("cover_photo", coverPhoto);
 		formData.append("gender", gender);
 		formData.append("height", height);
 		formData.append("weight", weight);
 		formData.append("goal", goal);
 		formData.append("date_of_birth", dateOfBirth);
+
+		// profilePicture ve coverPhoto girişlerinden dosyaları alın
+		if (profilePicture && profilePicture instanceof File) {
+			formData.append("profile_picture", profilePicture);
+		}
+
+		if (coverPhoto && coverPhoto instanceof File) {
+			formData.append("cover_photo", coverPhoto);
+		}
 
 		// Ensure the user ID is valid before attempting an update
 		if (userId === null) {
@@ -81,6 +88,10 @@ function ProfileEdit() {
 			});
 			setStatus("Profile updated successfully!");
 		} catch (error) {
+			console.error(
+				"Error updating profile:",
+				error.response ? error.response.data : error
+			);
 			setStatus("Error updating profile: " + error);
 		}
 	};
