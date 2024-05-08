@@ -28,11 +28,11 @@ class EditProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
-            'user', 'bio', 'profile_picture', 'cover_photo',
+            'id', 'user', 'bio', 'profile_picture', 'cover_photo',
             'gender', 'height', 'weight', 'goal',
             'date_of_birth', 'created', 'followers', 'following'
         ]
-        read_only_fields = ['user', 'created', 'followers', 'following']
+        read_only_fields = ['id','user', 'created', 'followers', 'following']
         
         
 class UserProfileSerializer(serializers.ModelSerializer):

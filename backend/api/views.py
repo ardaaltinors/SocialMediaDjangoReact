@@ -13,6 +13,10 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
     
+    def perform_create(self, serializer):
+        user = serializer.save()
+        Profile.objects.create(user=user)
+    
     
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created')

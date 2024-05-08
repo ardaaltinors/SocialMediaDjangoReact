@@ -5,6 +5,7 @@ import api from "../api";
 function ProfileEdit() {
 	// State variables to hold profile data
 	const [userId, setUserId] = useState(null);
+	const [profileId, setProfileId] = useState(null);
 	const [bio, setBio] = useState("");
 	const [profilePicture, setProfilePicture] = useState(null);
 	const [coverPhoto, setCoverPhoto] = useState(null);
@@ -32,6 +33,7 @@ function ProfileEdit() {
 
 					// Assign the user ID directly to state
 					setUserId(data.user || null);
+					setProfileId(data.id || null);
 
 					// Assign other profile fields
 					setBio(data.bio || "");
@@ -84,7 +86,7 @@ function ProfileEdit() {
 		}
 
 		try {
-			await api.put(`/api/profiles/${userId}/`, formData, {
+			await api.put(`/api/profiles/${profileId}/`, formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
