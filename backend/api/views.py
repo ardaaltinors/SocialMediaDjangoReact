@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .serializers import UserSerializer, PostSerializer, ProfileSerializer
+from .serializers import UserSerializer, PostSerializer, EditProfileSerializer, UserProfileSerializer
 from .models import Post, Profile
 
+# Register API
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+    
     
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created')
@@ -22,8 +25,9 @@ class PostViewSet(viewsets.ModelViewSet):
         else:
             print(serializer.errors)
             
-class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = ProfileSerializer
+            
+class EditProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = EditProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -31,3 +35,10 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class UserProfileView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+    lookup_field = 'username'
+    permission_classes = [AllowAny]

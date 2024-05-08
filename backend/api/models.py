@@ -12,6 +12,10 @@ def validate_image_size(image):
     if image.size > max_size_kb * 1024:
         raise ValidationError(f"Max image size is {max_size_kb} KB!")
 
+# models.py
+from django.db import models
+from django.conf import settings
+
 class Profile(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -27,27 +31,19 @@ class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', validators=[validate_image_size],blank=True, null=True)
-    cover_photo = models.ImageField(upload_to='cover_pics/', validators=[validate_image_size], blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    cover_photo = models.ImageField(upload_to='cover_pics/', blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     height = models.FloatField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
     goal = models.CharField(max_length=10, choices=GOAL_CHOICES, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
 
     def __str__(self):
         return f"Profile of {self.user.username}"
 
-# Kullanıcı oluşturulduğunda otomatik profil eklemek için sinyal
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

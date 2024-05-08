@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 function ProfileEdit() {
@@ -13,6 +14,8 @@ function ProfileEdit() {
 	const [goal, setGoal] = useState("");
 	const [dateOfBirth, setDateOfBirth] = useState("");
 	const [status, setStatus] = useState("");
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// Fetch the user's current profile data
@@ -87,6 +90,11 @@ function ProfileEdit() {
 				},
 			});
 			setStatus("Profile updated successfully!");
+
+			// Navigate to the home page after a successful update
+			setTimeout(() => {
+				navigate("/");
+			}, 1000);
 		} catch (error) {
 			console.error(
 				"Error updating profile:",

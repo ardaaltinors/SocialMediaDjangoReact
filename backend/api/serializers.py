@@ -19,9 +19,42 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'user', 'image', 'caption', 'created', 'liked_by']
         read_only_fields = ['id', 'created']
+       
         
-class ProfileSerializer(serializers.ModelSerializer):
+class EditProfileSerializer(serializers.ModelSerializer):
+    followers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    following = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Profile
-        fields = ['user', 'bio', 'profile_picture', 'cover_photo', 'gender', 'height', 'weight', 'goal', 'date_of_birth', 'created']
-        read_only_fields = ['user', 'created']
+        fields = [
+            'user', 'bio', 'profile_picture', 'cover_photo',
+            'gender', 'height', 'weight', 'goal',
+            'date_of_birth', 'created', 'followers', 'following'
+        ]
+        read_only_fields = ['user', 'created', 'followers', 'following']
+        
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    posts = serializers.SerializerMethodField()
+    bio = serializers.CharField(source='profile.bio')
+    profile_picture = serializers.ImageField(source='profile.profile_picture')
+    cover_photo = serializers.ImageField(source='profile.cover_photo')
+    followers = serializers.SerializerMethodField()
+    following = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = ['username', 'bio', 'profile_picture', 'cover_photo', 'followers', 'following', 'posts']
+    
+    def get_posts(self, obj):
+        posts = Post.objects.filter(user=obj).order_by('-created')
+        return [{'id': post.id, 'caption': post.caption, 'image': post.image.url, 'created': post.created} for post in posts]
+
+    def get_followers(self, obj):
+        profile = Profile.objects.get(user=obj)
+        return [follower.username for follower in profile.followers.all()]
+
+    def get_following(self, obj):
+        profile = Profile.objects.get(user=obj)
+        return [following.username for following in profile.following.all()]
