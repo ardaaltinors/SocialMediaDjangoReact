@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Post, Profile
+from .models import Post, Profile, Comment
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,6 +19,18 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'user', 'image', 'caption', 'created', 'liked_by']
         read_only_fields = ['id', 'created']
+        
+        
+class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'post', 'user', 'username', 'text', 'created']
+        read_only_fields = ['id', 'created', 'user', 'username']
+
+    def get_username(self, obj):
+        return obj.user.username
        
         
 class EditProfileSerializer(serializers.ModelSerializer):
@@ -53,8 +65,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_followers(self, obj):
         profile = Profile.objects.get(user=obj)
-        return [follower.username for follower in profile.followers.all()]
+        return [follower.user.username for follower in profile.followers.all()]
 
     def get_following(self, obj):
         profile = Profile.objects.get(user=obj)
-        return [following.username for following in profile.following.all()]
+        return [following.user.username for following in profile.following.all()]

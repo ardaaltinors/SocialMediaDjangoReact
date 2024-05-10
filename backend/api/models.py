@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxLengthValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -57,3 +58,13 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created']
+        
+        
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField(validators=[MaxLengthValidator(500)])
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on post {self.post.id}"

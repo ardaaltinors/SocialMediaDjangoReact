@@ -1,12 +1,16 @@
+// Home.js
 import { useState, useEffect } from "react";
 import api from "../api";
 import "../styles/Home.css";
+import CommentList from "../components/CommentList";
+import CreateComment from "../components/CreateComment";
 
 function Home() {
-	const [posts, setPosts] = useState([]); // posts is an array of objects
+	const [posts, setPosts] = useState([]);
 	const [caption, setCaption] = useState("");
 	const [image, setImage] = useState(null);
 	const [status, setStatus] = useState("");
+	const [comments, setComments] = useState({});
 
 	useEffect(() => {
 		getPosts();
@@ -18,9 +22,26 @@ function Home() {
 			.then((response) => response.data)
 			.then((data) => {
 				setPosts(data);
-				console.log(data);
+				data.forEach((post) => getCommentsForPost(post.id));
 			})
 			.catch((error) => alert(error));
+	};
+
+	const getCommentsForPost = (postId) => {
+		api
+			.get(`/api/comments/?post=${postId}`)
+			.then((response) => response.data)
+			.then((data) => {
+				setComments((prev) => ({ ...prev, [postId]: data }));
+			})
+			.catch((error) => alert(error));
+	};
+
+	const handleCommentAdded = (postId, newComment) => {
+		setComments((prev) => ({
+			...prev,
+			[postId]: [...(prev[postId] || []), newComment],
+		}));
 	};
 
 	const createPost = async (e) => {
@@ -36,15 +57,14 @@ function Home() {
 				},
 			});
 			setStatus("Success! Your post has been created.");
-			setCaption(""); // Clear the input fields after success
+			setCaption("");
 			setImage(null);
-			getPosts(); // Refresh posts list
+			getPosts();
 		} catch (error) {
 			setStatus("Error: Unable to create post.");
 		}
 	};
 
-	// Form data management
 	const handleCaptionChange = (e) => {
 		setCaption(e.target.value);
 	};
@@ -94,6 +114,13 @@ function Home() {
 							{post.user.username} - {new Date(post.created).toLocaleString()}
 						</p>
 						<hr />
+						<CommentList comments={comments[post.id] || []} />
+						<CreateComment
+							postId={post.id}
+							onCommentAdded={(newComment) =>
+								handleCommentAdded(post.id, newComment)
+							}
+						/>
 					</div>
 				))}
 			</div>
