@@ -1,4 +1,3 @@
-// Home.js
 import { useState, useEffect } from "react";
 import api from "../api";
 import "../styles/Home.css";
@@ -29,12 +28,12 @@ function Home() {
 
 	const getCommentsForPost = (postId) => {
 		api
-			.get(`/api/comments/?post=${postId}`)
+			.get(`/api/comments/post/${postId}`)
 			.then((response) => response.data)
 			.then((data) => {
 				setComments((prev) => ({ ...prev, [postId]: data }));
 			})
-			.catch((error) => alert(error));
+			.catch((error) => alert(`Error fetching comments: ${error}`));
 	};
 
 	const handleCommentAdded = (postId, newComment) => {

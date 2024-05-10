@@ -9,5 +9,5 @@ router.register(r'profiles', EditProfileViewSet, basename='edit-profile')
 urlpatterns = [
     path('', include(router.urls)),
     path('profile/<str:username>/', UserProfileView.as_view(), name='user-profile'),
-    path('comments/', CommentListCreateDeleteView.as_view(), name='comment-list-create-delete')
+    path('comments/post/<int:post_id>/', CommentListCreateDeleteView.as_view(), name='comment-list-create-delete'),
 ]

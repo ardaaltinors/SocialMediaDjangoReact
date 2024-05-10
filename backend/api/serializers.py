@@ -27,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'post', 'user', 'username', 'text', 'created']
-        read_only_fields = ['id', 'created', 'user', 'username']
+        read_only_fields = ['id', 'created', 'user', 'username', 'post']
 
     def get_username(self, obj):
         return obj.user.username

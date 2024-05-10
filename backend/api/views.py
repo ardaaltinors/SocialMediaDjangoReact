@@ -43,12 +43,19 @@ class IsOwnerOrReadOnly(BasePermission):
 
 
 class CommentListCreateDeleteView(generics.ListCreateAPIView, generics.DestroyAPIView):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    
+    def get_queryset(self):
+        post_id = self.kwargs.get('post_id')
+        return Comment.objects.filter(post_id=post_id)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        # URL parametresindeki post_id'yi al ve gönderiye ulaş
+        post_id = self.kwargs.get('post_id')
+        post = Post.objects.get(id=post_id)
+        # Yorumu kullanıcı ve gönderi ile birlikte kaydet
+        serializer.save(user=self.request.user, post=post)
 
     def delete(self, request, *args, **kwargs):
         comment = self.get_object()

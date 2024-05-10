@@ -1,4 +1,4 @@
-// CreateComment.js
+// CreateComment.jsx
 import { useState } from "react";
 import api from "../api";
 
@@ -14,14 +14,14 @@ function CreateComment({ postId, onCommentAdded }) {
 		e.preventDefault();
 
 		try {
-			// Make sure `postId` is a valid integer and `commentText` is not empty
-			if (!postId || !commentText.trim()) {
+			// Ensure `postId` is valid and `commentText` is not empty
+			if (!postId || isNaN(postId) || !commentText.trim()) {
 				setStatus("Error: Missing required fields.");
 				return;
 			}
 
-			const response = await api.post(`/api/comments/`, {
-				post: postId,
+			// Attempt to post the comment
+			const response = await api.post(`/api/comments/post/${postId}/`, {
 				text: commentText,
 			});
 
@@ -31,9 +31,9 @@ function CreateComment({ postId, onCommentAdded }) {
 		} catch (error) {
 			if (error.response) {
 				// The request was made, and the server responded with a status code
-				// that falls out of the range of 2xx
+				// that falls outside the range of 2xx
 				console.error("Error response:", error.response.data);
-				setStatus(`Error: ${error.response.data}`);
+				setStatus(`Error: ${JSON.stringify(error.response.data)}`);
 			} else if (error.request) {
 				// The request was made, but no response was received
 				console.error("Error request:", error.request);
