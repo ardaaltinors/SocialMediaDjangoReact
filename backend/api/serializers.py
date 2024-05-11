@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Post, Profile, Comment
+from .models import Post, Profile, Comment, Notification
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -70,3 +70,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def get_following(self, obj):
         profile = Profile.objects.get(user=obj)
         return [following.user.username for following in profile.following.all()]
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'recipient', 'message', 'is_read', 'created_at']
+        read_only_fields = ['id', 'recipient', "message", 'created_at', 'is_read']

@@ -68,3 +68,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on post {self.post.id}"
+    
+    
+class Notification(models.Model):
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='notifications', on_delete=models.CASCADE)
+    message = models.CharField(max_length=255)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.recipient.username}'s notification: {self.message} |({'read' if self.is_read else 'unread'}) | {self.created_at}"

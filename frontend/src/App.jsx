@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProfileEdit from "./pages/ProfileEdit";
 import UserProfile from "./pages/UserProfile";
+import Test from "./pages/Test";
 
 function Logout() {
 	localStorage.clear();
@@ -44,6 +45,14 @@ function App() {
 					<Route path="/register" element={<RegisterAndLogout />} />
 					<Route path="/profile/:username" element={<UserProfile />} />
 					<Route path="*" element={<NotFound />} />
+					<Route
+						path="/test"
+						element={
+							<ProtectedRoute>
+								<Test />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>

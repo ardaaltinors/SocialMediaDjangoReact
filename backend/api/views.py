@@ -9,6 +9,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, BasePermission
 from .serializers import *
 from .models import *
 
+def create_notification(recipient, message):
+    Notification.objects.create(recipient=recipient, message=message)
+
 # Register API
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -53,10 +56,8 @@ class CommentListCreateDeleteView(generics.ListCreateAPIView, generics.DestroyAP
         return Comment.objects.filter(post_id=post_id)
 
     def perform_create(self, serializer):
-        # URL parametresindeki post_id'yi al ve gönderiye ulaş
         post_id = self.kwargs.get('post_id')
         post = Post.objects.get(id=post_id)
-        # Yorumu kullanıcı ve gönderi ile birlikte kaydet
         serializer.save(user=self.request.user, post=post)
 
     def delete(self, request, *args, **kwargs):
@@ -106,3 +107,11 @@ class UserProfileView(generics.RetrieveAPIView):
     serializer_class = UserProfileSerializer
     lookup_field = 'username'
     permission_classes = [AllowAny]
+    
+    
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(recipient=self.request.user, is_read=False)
