@@ -75,10 +75,14 @@ class ToggleLikeView(APIView):
 
         if user in post.liked_by.all():
             post.liked_by.remove(user)
-            return Response({"status": "like removed"}, status=status.HTTP_200_OK)
+            action = "like removed"
         else:
             post.liked_by.add(user)
-            return Response({"status": "like added"}, status=status.HTTP_200_OK)
+            action = "like added"
+
+        # Return the number of likes
+        likes_count = post.liked_by.count()
+        return Response({"status": action, "likes_count": likes_count}, status=status.HTTP_200_OK)
 
     def get(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)

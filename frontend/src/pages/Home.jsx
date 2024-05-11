@@ -20,6 +20,7 @@ function Home() {
 			.get("/api/posts/")
 			.then((response) => response.data)
 			.then((data) => {
+				console.log(data);
 				setPosts(data);
 				data.forEach((post) => getCommentsForPost(post.id));
 			})
@@ -72,6 +73,27 @@ function Home() {
 		setImage(e.target.files[0]);
 	};
 
+	const toggleLike = (postId) => {
+		api
+			.post(`/api/posts/${postId}/toggle-like/`)
+			.then((response) => {
+				// Update the posts state with the updated likes count
+				const updatedPosts = posts.map((post) => {
+					if (post.id === postId) {
+						// Assuming response.data.likes_count is the updated count of likes
+						let data = { ...post, likes: response.data.likes_count };
+						console.log(data);
+						return data;
+					}
+					return post;
+				});
+				setPosts(updatedPosts);
+			})
+			.catch((error) => {
+				console.error("Error toggling like:", error);
+			});
+	};
+
 	return (
 		<div>
 			<h1>All Posts</h1>
@@ -112,6 +134,8 @@ function Home() {
 						<p>
 							{post.user.username} - {new Date(post.created).toLocaleString()}
 						</p>
+						<button onClick={() => toggleLike(post.id)}>Like</button>
+						<span>Likes: {post.liked_by.length}</span>
 						<hr />
 						<CommentList comments={comments[post.id] || []} />
 						<CreateComment
