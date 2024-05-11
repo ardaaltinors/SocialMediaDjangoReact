@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets, status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, BasePermission, SAFE_METHODS
 
@@ -62,6 +64,26 @@ class CommentListCreateDeleteView(generics.ListCreateAPIView, generics.DestroyAP
         if comment.user == request.user:
             return self.destroy(request, *args, **kwargs)
         return Response({'detail': 'You do not have permission to delete this comment.'}, status=403)
+    
+    
+class ToggleLikeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        if user in post.liked_by.all():
+            post.liked_by.remove(user)
+            return Response({"status": "like removed"}, status=status.HTTP_200_OK)
+        else:
+            post.liked_by.add(user)
+            return Response({"status": "like added"}, status=status.HTTP_200_OK)
+
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        likes_count = post.liked_by.count()
+        return Response({"likes_count": likes_count})
             
             
 class EditProfileViewSet(viewsets.ModelViewSet):
