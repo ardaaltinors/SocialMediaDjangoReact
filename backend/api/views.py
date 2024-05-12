@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
+from django.db.models import Q
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
@@ -130,3 +131,30 @@ class NotificationListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Notification.objects.filter(recipient=self.request.user, is_read=False)
+    
+    
+# /api/search/?query=sorgu
+class SearchAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        query = request.query_params.get('query', '')
+        if not query:
+            return Response({"message": "No search query provided."}, status=400)
+        
+        # Search in posts
+        posts = Post.objects.filter(
+            Q(caption__icontains=query) | Q(user__username__icontains=query)
+        ).distinct()
+        post_serializer = PostSerializer(posts, many=True, context={'request': request})
+        
+        # Search in users
+        users = User.objects.filter(
+            Q(username__icontains=query) | Q(profile__bio__icontains=query)
+        ).distinct()
+        user_serializer = UserProfileSerializer(users, many=True, context={'request': request})
+        
+        return Response({
+            'posts': post_serializer.data,
+            'profiles': user_serializer.data
+        })
