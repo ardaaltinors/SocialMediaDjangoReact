@@ -54,10 +54,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     cover_photo = serializers.ImageField(source='profile.cover_photo')
     followers = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
+    current_user_id = serializers.SerializerMethodField()  # Mevcut kullanıcı ID'si için alan ekleme
     
     class Meta:
         model = User
-        fields = ['username', 'bio', 'profile_picture', 'cover_photo', 'followers', 'following', 'posts']
+        fields = ['id' ,'username', 'bio', 'profile_picture', 'cover_photo', 'followers', 'following', 'posts', 'current_user_id']
     
     def get_posts(self, obj):
         posts = Post.objects.filter(user=obj).order_by('-created')
@@ -70,6 +71,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def get_following(self, obj):
         profile = Profile.objects.get(user=obj)
         return [following.user.username for following in profile.following.all()]
+    
+    def get_current_user_id(self, obj):
+        request = self.context.get('request')
+        if request and hasattr(request, 'user'):
+            return request.user.id
+        return None
 
 
 class NotificationSerializer(serializers.ModelSerializer):

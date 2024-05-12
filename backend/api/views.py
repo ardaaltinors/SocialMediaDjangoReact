@@ -89,6 +89,21 @@ class ToggleLikeView(APIView):
         post = get_object_or_404(Post, id=post_id)
         likes_count = post.liked_by.count()
         return Response({"likes_count": likes_count})
+    
+    
+class ToggleFollowView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        target_user = get_object_or_404(User, pk=user_id)
+        user_profile = request.user.profile
+
+        if target_user.profile in user_profile.following.all():
+            user_profile.following.remove(target_user.profile)
+            return Response({'status': 'unfollowed'}, status=status.HTTP_200_OK)
+        else:
+            user_profile.following.add(target_user.profile)
+            return Response({'status': 'followed'}, status=status.HTTP_200_OK)
             
             
 class EditProfileViewSet(viewsets.ModelViewSet):
