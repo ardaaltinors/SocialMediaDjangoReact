@@ -32,10 +32,8 @@ function Notifications() {
 					{notifications.map((notification) => (
 						<li key={notification.id}>
 							<p>
-								<strong>Message:</strong> {notification.message}
-							</p>
-							<p>
-								<strong>From:</strong> {notification.recipient}
+								<strong>Message:</strong>
+								{notification.message}
 							</p>
 							<p>
 								<strong>Date:</strong>{" "}
