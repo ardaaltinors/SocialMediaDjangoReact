@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import "../styles/Home.css";
-import CommentList from "../components/CommentList";
-import CreateComment from "../components/CreateComment";
+
+import Post from "../components/Post/Post";
 
 function Home() {
 	const [posts, setPosts] = useState([]);
@@ -19,10 +19,10 @@ function Home() {
 		api
 			.get("/api/posts/")
 			.then((response) => response.data)
-			.then((data) => {
-				console.log(data);
-				setPosts(data);
-				data.forEach((post) => getCommentsForPost(post.id));
+			.then((posts) => {
+				console.log(posts);
+				setPosts(posts);
+				posts.forEach((post) => getCommentsForPost(post.id));
 			})
 			.catch((error) => alert(error));
 	};
@@ -123,29 +123,18 @@ function Home() {
 			</div>
 
 			<div className="posts">
-				{posts.map((post) => (
-					<div key={post.id} className="post">
-						<img
-							src={post.image}
-							alt={post.caption}
-							style={{ width: "100%", maxWidth: "500px" }}
-						/>
-						<p>{post.caption}</p>
-						<p>
-							{post.user.username} - {new Date(post.created).toLocaleString()}
-						</p>
-						<button onClick={() => toggleLike(post.id)}>Like</button>
-						<span>Likes: {post.liked_by.length}</span>
-						<hr />
-						<CommentList comments={comments[post.id] || []} />
-						<CreateComment
-							postId={post.id}
-							onCommentAdded={(newComment) =>
-								handleCommentAdded(post.id, newComment)
-							}
-						/>
-					</div>
-				))}
+				{posts.map(
+					(post) =>
+						post && (
+							<Post
+								key={post.id}
+								post={post}
+								toggleLike={toggleLike}
+								comments={comments}
+								handleCommentAdded={handleCommentAdded}
+							/>
+						)
+				)}
 			</div>
 		</div>
 	);

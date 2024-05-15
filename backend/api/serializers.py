@@ -3,9 +3,11 @@ from rest_framework import serializers
 from .models import Post, Profile, Comment, Notification
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.ImageField(source='profile.profile_picture', read_only=True)
+    
     class Meta:
         model = User
-        fields = ["id", "username", "password"]
+        fields = ["id", "username", "profile_picture"]
         extra_kwargs = {"password": {"write_only": True, "required": True}}
         
     def create(self, validated_data):
