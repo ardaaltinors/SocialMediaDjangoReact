@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import "../styles/Home.css";
 
+import NavBar from "../components/Navigation/NavBar";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/CreatePost/CreatePost";
 
@@ -33,7 +34,6 @@ function Home() {
 			.get("/api/posts/")
 			.then((response) => response.data)
 			.then((posts) => {
-				console.log(posts);
 				setPosts(posts);
 				posts.forEach((post) => getCommentsForPost(post.id));
 			})
@@ -109,27 +109,30 @@ function Home() {
 
 	return (
 		<div>
-			<CreatePost
-				user={currentUser}
-				createPost={createPost}
-				handleCaptionChange={handleCaptionChange}
-				handleImageChange={handleImageChange}
-				caption={caption}
-			/>
+			<NavBar user={currentUser} />
+			<div className="content">
+				<CreatePost
+					user={currentUser}
+					createPost={createPost}
+					handleCaptionChange={handleCaptionChange}
+					handleImageChange={handleImageChange}
+					caption={caption}
+				/>
 
-			<div className="posts">
-				{posts.map(
-					(post) =>
-						post && (
-							<Post
-								key={post.id}
-								post={post}
-								toggleLike={toggleLike}
-								comments={comments}
-								handleCommentAdded={handleCommentAdded}
-							/>
-						)
-				)}
+				<div className="posts">
+					{posts.map(
+						(post) =>
+							post && (
+								<Post
+									key={post.id}
+									post={post}
+									toggleLike={toggleLike}
+									comments={comments}
+									handleCommentAdded={handleCommentAdded}
+								/>
+							)
+					)}
+				</div>
 			</div>
 		</div>
 	);

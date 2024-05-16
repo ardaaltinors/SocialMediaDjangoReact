@@ -1,11 +1,21 @@
-import React from "react";
-import "./post.css";
+import React, { useState } from "react";
+import "./Post.css";
 
 import likeImage from "../../assets/images/like.png";
-import CommentList from "../CommentList";
-import CreateComment from "../CreateComment";
+import CommentList from "./CommentList";
+import CreateComment from "./CreateComment";
 
 const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
+	const [isImageOpen, setIsImageOpen] = useState(false);
+
+	const handleImageClick = () => {
+		setIsImageOpen(true);
+	};
+
+	const closeImage = () => {
+		setIsImageOpen(false);
+	};
+
 	return (
 		<div key={post.id} className="post">
 			<div className="postContainer">
@@ -25,7 +35,14 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 
 				<div className="postCenter">
 					<div className="postCaption">{post.caption}</div>
-					<img src={post.image} alt="" className="postedImage" />
+					<center>
+						<img
+							src={post.image}
+							alt=""
+							className="postedImage"
+							onClick={handleImageClick}
+						/>
+					</center>
 				</div>
 
 				<div className="postBottom">
@@ -57,6 +74,11 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 					}
 				/>
 			</div>
+			{isImageOpen && (
+				<div className="imageModal" onClick={closeImage}>
+					<img src={post.image} alt="Full Screen" className="fullScreenImage" />
+				</div>
+			)}
 			<br />
 		</div>
 	);

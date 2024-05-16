@@ -24,15 +24,12 @@ class PostSerializer(serializers.ModelSerializer):
         
         
 class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField()
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'user', 'username', 'text', 'created']
-        read_only_fields = ['id', 'created', 'user', 'username', 'post']
-
-    def get_username(self, obj):
-        return obj.user.username
+        fields = ['id', 'post', 'user', 'text', 'created']
+        read_only_fields = ['id', 'created', 'user', 'post']
        
         
 class EditProfileSerializer(serializers.ModelSerializer):

@@ -9,8 +9,6 @@ import ProfileEdit from "./pages/ProfileEdit";
 import UserProfile from "./pages/UserProfile";
 import Test from "./pages/Test";
 
-import NavBar from "./components/Navigation/NavBar";
-
 function Logout() {
 	localStorage.clear();
 	return <Navigate to="/login" />;
@@ -24,7 +22,6 @@ function RegisterAndLogout() {
 function App() {
 	return (
 		<>
-			<NavBar />
 			<BrowserRouter>
 				<Routes>
 					<Route

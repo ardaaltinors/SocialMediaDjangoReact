@@ -1,0 +1,98 @@
+.comments {
+	margin: 10px;
+	padding: 10px;
+	background: #f9f9f9;
+	border-radius: 14px;
+}
+
+.comment {
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.comment a {
+	text-decoration: none;
+	color: #3b579d;
+}
+
+.comment-header {
+	display: flex;
+	align-items: center;
+}
+
+.comment-profile-pic {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.comment-date {
+	margin-left: auto;
+	opacity: 0.6;
+}
+
+.comment-text {
+	margin-top: 8px;
+	margin-left: 2px;
+}
+
+.comment-actions {
+	margin-top: 10px;
+}
+
+.reply-button,
+.like-button {
+	background: #3b579d;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	margin-right: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.reply-button:hover,
+.like-button:hover {
+	background: #0056b3;
+}
+
+.create-comment {
+	margin: 10px;
+	padding: 10px;
+}
+
+.comment-form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.comment-input {
+	width: 98%;
+	height: 60px;
+	padding: 8px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	resize: none; /* Kullanıcıların metin alanını yeniden boyutlandırmasını engeller */
+}
+
+.comment-submit-button {
+	padding: 10px 15px;
+	background-color: #3b579d;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.comment-submit-button:hover {
+	background-color: #0056b3;
+}
+
+.comment-status {
+	color: rgb(142, 124, 124);
+	margin-top: 10px;
+}

@@ -21,7 +21,7 @@ const CreatePost = ({
 							className="addPostPic"
 						/>
 						<input
-							placeholder="Whats in your mind..? "
+							placeholder={`What's in your mind, ${user.username}?`}
 							className="addpostInput"
 							value={caption}
 							onChange={handleCaptionChange}
@@ -33,7 +33,7 @@ const CreatePost = ({
 						<div className="addPostOptions">
 							<label htmlFor="image">
 								<IconButton component="span">
-									<InsertPhotoIcon htmlColor="gold" className="addPhoto" />
+									<InsertPhotoIcon htmlColor="#3b579d" className="addPhoto" />
 								</IconButton>
 								<span className="addPostOptionText">Add Image/Video</span>
 							</label>

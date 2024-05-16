@@ -1,0 +1,46 @@
+.notifications {
+	max-width: 600px;
+	margin: 20px auto;
+	font-family: Arial, sans-serif;
+}
+
+.notification-list {
+	list-style: none;
+	padding: 0;
+}
+
+.notification-item {
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	padding: 10px;
+}
+
+.notification-item.unread {
+	background-color: #e9f5ff;
+}
+
+.notification-image img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.notification-content {
+	flex-grow: 1;
+	margin-left: 10px;
+}
+
+.notification-status .read {
+	color: green;
+}
+
+.notification-status .unread {
+	color: red;
+}
+
+.loading {
+	text-align: center;
+	padding: 20px;
+}

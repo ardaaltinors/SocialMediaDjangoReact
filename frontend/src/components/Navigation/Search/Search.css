@@ -1,0 +1,53 @@
+.searchComponent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+}
+
+.searchIcon {
+	padding-left: 10px;
+}
+.searchInput {
+	border: none;
+	width: 80%;
+}
+
+.searchBox {
+	display: flex;
+	align-items: center;
+	width: 80%;
+	height: 30px;
+	background-color: #fff;
+	border-radius: 20px;
+}
+
+.searchResults {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profileResult,
+.postResult {
+	display: flex;
+	align-items: center;
+	width: 80%;
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+}
+
+.resultImage {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.resultInfo {
+	display: flex;
+	flex-direction: column;
+}

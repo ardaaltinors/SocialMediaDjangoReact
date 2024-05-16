@@ -3,10 +3,14 @@
 	width: 95%;
 	-webkit-box-shadow: 5px 5px 13px 5px rgba(0, 0, 0, 0.14);
 	box-shadow: 5px 5px 13px 5px rgba(0, 0, 0, 0.14);
-	margin-left: 30px 0;
-	margin-left: 10px;
+	margin: 18px 10px;
 	border-radius: 10px;
 }
+
+.postContainer {
+	padding: 2px 10px;
+}
+
 .postImage {
 	width: 38px;
 	height: 38px;
@@ -42,14 +46,16 @@
 
 .postCaption {
 	font-family: roboto;
-	margin-left: 10px;
-	margin-bottom: 10px;
+	margin: 16px 8px;
 }
+
 .postedImage {
-	width: 98%;
-	background-size: cover;
-	margin-left: 5px;
+	max-width: 100%;
+	max-height: 86vh;
+	object-fit: contain;
+	border-radius: 8px;
 }
+
 .reactionPic {
 	width: 23px;
 	height: 23px;
@@ -75,4 +81,22 @@
 	margin-right: 10px;
 	cursor: pointer;
 	text-decoration: 1px underline;
+}
+
+.imageModal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.fullScreenImage {
+	max-width: 90%;
+	max-height: 90%;
 }
