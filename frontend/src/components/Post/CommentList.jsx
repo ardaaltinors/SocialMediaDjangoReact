@@ -2,7 +2,6 @@ import React from "react";
 import "./Comment.css";
 
 function CommentList({ comments }) {
-	console.log("yorumlar ", comments);
 	return (
 		<div className="comments">
 			{comments.length > 0 ? (

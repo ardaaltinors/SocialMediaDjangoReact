@@ -1,0 +1,114 @@
+.profile {
+	margin: 0 auto;
+	font-family: Arial, sans-serif;
+}
+
+.profile-content {
+	width: 60%;
+	margin: 0 auto;
+}
+
+.cover-photo img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+}
+
+.profile-info {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin-top: -100px;
+}
+
+.profile-picture {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	border: 4px solid white;
+	object-fit: cover;
+}
+
+.profile-info h1 {
+	margin: 10px 0;
+	font-size: 28px;
+}
+
+.follow-button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.follow-button:hover {
+	background-color: #0056b3;
+}
+
+.bio {
+	text-align: center;
+	margin: 20px 0;
+	font-size: 16px;
+	color: #555;
+}
+
+.connections {
+	display: flex;
+	justify-content: space-around;
+	margin: 20px 0;
+}
+
+.connections h3 {
+	margin-bottom: 10px;
+}
+
+.connections ul {
+	list-style: none;
+	padding: 0;
+}
+
+.posts {
+	margin-top: 20px;
+}
+
+.posts h2 {
+	margin-bottom: 20px;
+}
+
+.notification-list {
+	list-style: none;
+	padding: 0;
+}
+
+.notification-item {
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.notification-item.unread {
+	background-color: #e9f5ff;
+}
+
+.notification-content {
+	display: flex;
+	align-items: center;
+}
+
+.notification-content p {
+	margin: 0;
+}
+
+.notification-status .read {
+	color: green;
+}
+
+.notification-status .unread {
+	color: red;
+}
+
+.loading {
+	text-align: center;
+	padding: 20px;
+}

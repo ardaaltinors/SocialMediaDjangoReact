@@ -61,7 +61,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def get_posts(self, obj):
         posts = Post.objects.filter(user=obj).order_by('-created')
-        return [{'id': post.id, 'caption': post.caption, 'image': post.image.url, 'created': post.created} for post in posts]
+        return PostSerializer(posts, many=True, context=self.context).data
 
     def get_followers(self, obj):
         profile = Profile.objects.get(user=obj)

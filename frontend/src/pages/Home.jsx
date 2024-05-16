@@ -35,6 +35,7 @@ function Home() {
 			.then((response) => response.data)
 			.then((posts) => {
 				setPosts(posts);
+				console.log(posts);
 				posts.forEach((post) => getCommentsForPost(post.id));
 			})
 			.catch((error) => alert(error));
