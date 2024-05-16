@@ -29,8 +29,13 @@ class CurrentUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = UserSerializer(request.user)
+        serializer = UserSerializer(request.user, context={'request': request})
         return Response(serializer.data)
+    
+    def get_serializer_context(self):
+        context = super(CurrentUserView, self).get_serializer_context()
+        context.update({'request': self.request})
+        return context
     
     
 class PostViewSet(viewsets.ModelViewSet):

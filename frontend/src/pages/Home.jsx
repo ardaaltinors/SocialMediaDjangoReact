@@ -109,31 +109,13 @@ function Home() {
 
 	return (
 		<div>
-			<CreatePost />
-			<div className="create-post">
-				<form onSubmit={createPost}>
-					<div>
-						<label htmlFor="caption">Caption:</label>
-						<input
-							type="text"
-							id="caption"
-							value={caption}
-							onChange={handleCaptionChange}
-						/>
-					</div>
-					<div>
-						<label htmlFor="image">Upload Image:</label>
-						<input
-							type="file"
-							id="image"
-							accept="image/*"
-							onChange={handleImageChange}
-						/>
-					</div>
-					<button type="submit">Create Post</button>
-				</form>
-				{status && <p>{status}</p>}
-			</div>
+			<CreatePost
+				user={currentUser}
+				createPost={createPost}
+				handleCaptionChange={handleCaptionChange}
+				handleImageChange={handleImageChange}
+				caption={caption}
+			/>
 
 			<div className="posts">
 				{posts.map(
