@@ -3,9 +3,11 @@ import api from "../api";
 import "../styles/Home.css";
 
 import Post from "../components/Post/Post";
+import CreatePost from "../components/CreatePost/CreatePost";
 
 function Home() {
 	const [posts, setPosts] = useState([]);
+	const [currentUser, setCurrentUser] = useState([]);
 	const [caption, setCaption] = useState("");
 	const [image, setImage] = useState(null);
 	const [status, setStatus] = useState("");
@@ -13,7 +15,18 @@ function Home() {
 
 	useEffect(() => {
 		getPosts();
+		getCurrentUser();
 	}, []);
+
+	const getCurrentUser = () => {
+		api
+			.get("/api/current-user/")
+			.then((response) => {
+				setCurrentUser(response.data);
+				console.log(response.data);
+			})
+			.catch((error) => alert(error));
+	};
 
 	const getPosts = () => {
 		api
@@ -96,7 +109,7 @@ function Home() {
 
 	return (
 		<div>
-			<h1>All Posts</h1>
+			<CreatePost />
 			<div className="create-post">
 				<form onSubmit={createPost}>
 					<div>

@@ -22,6 +22,15 @@ class CreateUserView(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = serializer.save()
         Profile.objects.create(user=user)
+        
+        
+# Get the data of current logged in user
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
     
     
 class PostViewSet(viewsets.ModelViewSet):
