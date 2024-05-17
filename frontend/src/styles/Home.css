@@ -1,5 +1,10 @@
 .content {
-	width: 60%;
-	margin: 0 auto;
+	flex-grow: 1;
+	margin: 0 220px; /* Adjust based on the width of your left menu */
 	padding: 20px;
+}
+
+#mainContainer {
+	display: flex;
+	width: 100%;
 }

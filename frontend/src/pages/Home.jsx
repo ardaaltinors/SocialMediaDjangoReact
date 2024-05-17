@@ -5,6 +5,7 @@ import "../styles/Home.css";
 import NavBar from "../components/Navigation/NavBar";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/CreatePost/CreatePost";
+import LeftMenu from "../components/LeftMenu/LeftMenu";
 
 function Home() {
 	const [posts, setPosts] = useState([]);
@@ -111,30 +112,33 @@ function Home() {
 	return (
 		<div>
 			<NavBar user={currentUser} />
-			<div className="content">
-				<CreatePost
-					user={currentUser}
-					createPost={createPost}
-					handleCaptionChange={handleCaptionChange}
-					handleImageChange={handleImageChange}
-					caption={caption}
-				/>
+			<div id="mainContainer">
+				<div className="content">
+					<CreatePost
+						user={currentUser}
+						createPost={createPost}
+						handleCaptionChange={handleCaptionChange}
+						handleImageChange={handleImageChange}
+						caption={caption}
+					/>
 
-				<div className="posts">
-					{posts.map(
-						(post) =>
-							post && (
-								<Post
-									key={post.id}
-									post={post}
-									toggleLike={toggleLike}
-									comments={comments}
-									handleCommentAdded={handleCommentAdded}
-								/>
-							)
-					)}
+					<div className="posts">
+						{posts.map(
+							(post) =>
+								post && (
+									<Post
+										key={post.id}
+										post={post}
+										toggleLike={toggleLike}
+										comments={comments}
+										handleCommentAdded={handleCommentAdded}
+									/>
+								)
+						)}
+					</div>
 				</div>
 			</div>
+			<LeftMenu />
 		</div>
 	);
 }

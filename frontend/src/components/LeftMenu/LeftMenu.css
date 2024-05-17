@@ -1,0 +1,79 @@
+.leftPane {
+	position: fixed;
+	top: 70px; /* Adjust based on the height of your navbar */
+	left: 0;
+	width: 200px; /* Adjust width as needed */
+	height: calc(100% - 70px); /* Adjust based on the height of your navbar */
+	overflow-y: auto; /* Add scroll if content is taller than the screen */
+	background-color: #f8f9fa; /* Background color to match your theme */
+	border-right: 1px solid #ddd; /* Optional border for better separation */
+}
+
+.leftPane a {
+	text-decoration: none;
+	color: black;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+::-webkit-scrollbar-track {
+	background-color: rgb(224, 234, 241);
+}
+::-webkit-scrollbar-thumb {
+	background-color: rgb(207, 205, 204);
+}
+
+.leftPainContainer {
+	padding: 20px;
+}
+.leftPainMenu {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.leftPainMenuItem {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.leftMenuText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300;
+}
+
+.leftPainIcons {
+	margin-right: 20px;
+}
+
+.pagePic {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.pagesOfwatched {
+	font-family: sans-serif;
+	font-weight: 300;
+	margin-top: 10px;
+	color: rgb(96, 100, 100);
+}
+.PageList {
+	padding: 0;
+	margin: 0;
+}
+
+.pageListItem {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+	margin-top: 20px;
+}
+
+.PageName {
+	margin-left: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 200;
+}

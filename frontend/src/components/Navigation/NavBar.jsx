@@ -28,12 +28,6 @@ function NavBar({ user }) {
 				<Search />
 			</div>
 			<div className="navBarRight">
-				<div className="navBarLinks">
-					<a href="/">
-						<span className="navLink">Home</span>
-					</a>
-					<span className="navLink">Following</span>
-				</div>
 				<div className="navBarIcons">
 					<div className="navIcon" onClick={toggleNotifications}>
 						<NotificationsIcon />
