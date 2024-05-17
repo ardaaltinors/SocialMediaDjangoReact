@@ -7,11 +7,14 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ["id", "username", "profile_picture"]
+        fields = ["id", "username", "profile_picture", "password"]
         extra_kwargs = {"password": {"write_only": True, "required": True}}
         
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
         return user
     
     
@@ -82,4 +85,4 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'recipient', 'message', 'is_read', 'created_at']
-        read_only_fields = ['id', 'recipient', "message", 'created_at', 'is_read']
+        read_only_fields = ['id', 'recipient', "message", 'created_at']

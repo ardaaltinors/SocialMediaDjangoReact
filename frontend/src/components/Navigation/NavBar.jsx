@@ -29,7 +29,9 @@ function NavBar({ user }) {
 			</div>
 			<div className="navBarRight">
 				<div className="navBarLinks">
-					<span className="navLink">Home</span>
+					<a href="/">
+						<span className="navLink">Home</span>
+					</a>
 					<span className="navLink">Following</span>
 				</div>
 				<div className="navBarIcons">

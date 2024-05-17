@@ -1,5 +1,6 @@
 import React from "react";
 import "./Comment.css";
+import moment from "moment";
 
 function CommentList({ comments }) {
 	return (
@@ -17,7 +18,8 @@ function CommentList({ comments }) {
 								<b>@{comment.user.username}</b>
 							</a>
 							<span className="comment-date">
-								{new Date(comment.created).toLocaleString()}
+								{moment(comment.created).fromNow()}
+								{/* {new Date(comment.created).toLocaleString()} */}
 							</span>
 						</div>
 						<p className="comment-text">{comment.text}</p>

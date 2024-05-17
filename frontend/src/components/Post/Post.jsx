@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import "./Post.css";
 
 import likeImage from "../../assets/images/like.png";
@@ -28,7 +29,8 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 						/>
 						<span className="postUserName">{post.user.username}</span>
 						<span className="postTime">
-							{new Date(post.created).toLocaleString()}
+							{moment(post.created).fromNow()}
+							{/* {new Date(post.created).toLocaleString()} */}
 						</span>
 					</div>
 				</div>

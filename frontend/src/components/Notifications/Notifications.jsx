@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchNotifications } from "../../utils/notificationUtils";
 import "./Notifications.css";
+import moment from "moment";
 
 function Notifications() {
 	const [notifications, setNotifications] = useState([]);
@@ -35,7 +36,8 @@ function Notifications() {
 							<div className="notification-content">
 								<p>{notification.message}</p>
 								<p className="date">
-									{new Date(notification.created_at).toLocaleString()}
+									{moment(notification.created_at).fromNow()}
+									{/* {new Date(notification.created_at).toLocaleString()} */}
 								</p>
 							</div>
 							<div className="notification-status">

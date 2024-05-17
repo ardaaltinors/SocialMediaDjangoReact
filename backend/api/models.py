@@ -17,6 +17,9 @@ def validate_image_size(image):
 from django.db import models
 from django.conf import settings
 
+def get_default_profile_picture():
+    return 'profile_pics/default.jpeg'
+
 class Profile(models.Model):
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -32,7 +35,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True, default=get_default_profile_picture)
     cover_photo = models.ImageField(upload_to='cover_pics/', blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     height = models.FloatField(blank=True, null=True)
