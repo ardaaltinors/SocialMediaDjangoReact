@@ -4,6 +4,7 @@ import api from "../api";
 import NavBar from "../components/Navigation/NavBar";
 import Post from "../components/Post/Post";
 import "../styles/UserProfile.css";
+import LeftMenu from "../components/LeftMenu/LeftMenu";
 
 function UserProfile() {
 	const { username } = useParams();
@@ -95,56 +96,65 @@ function UserProfile() {
 	};
 
 	return (
-		<div className="profile">
+		<div>
 			<NavBar user={currentUser} />
-			{coverPhoto && (
-				<div className="cover-photo">
-					<img src={coverPhoto} alt="Cover" />
-				</div>
-			)}
-			<div className="profile-info">
-				{profilePicture && (
-					<img src={profilePicture} alt="Profile" className="profile-picture" />
-				)}
-				<h1>{username}</h1>
-				<button onClick={toggleFollow} className="follow-button">
-					{isFollowing ? "Unfollow" : "Follow"}
-				</button>
-				<p className="bio">{bio}</p>
-			</div>
-			<div className="profile-content">
-				<div className="connections">
-					<div className="followers">
-						<h3>Followers ({followers.length})</h3>
-						<ul>
-							{followers.map((follower, index) => (
-								<li key={index}>{follower}</li>
-							))}
-						</ul>
-					</div>
-					<div className="following">
-						<h3>Following ({following.length})</h3>
-						<ul>
-							{following.map((followed, index) => (
-								<li key={index}>{followed}</li>
-							))}
-						</ul>
-					</div>
-				</div>
-				<div className="posts">
-					<h2>Posts</h2>
-					{posts.map(
-						(post) =>
-							post && (
-								<Post
-									key={post.id}
-									post={post}
-									toggleLike={toggleLike}
-									comments={comments}
-									handleCommentAdded={handleCommentAdded}
-								/>
-							)
+			<div className="profile-page">
+				<LeftMenu />
+				<div className="profile-container">
+					{coverPhoto && (
+						<div className="cover-photo">
+							<img src={coverPhoto} alt="Cover" />
+						</div>
 					)}
+					<div className="profile-info">
+						{profilePicture && (
+							<img
+								src={profilePicture}
+								alt="Profile"
+								className="profile-picture"
+							/>
+						)}
+						<h1>{username}</h1>
+						<button onClick={toggleFollow} className="follow-button">
+							{isFollowing ? "Unfollow" : "Follow"}
+						</button>
+						<p className="bio">{bio}</p>
+					</div>
+					<div className="profile-content">
+						<div className="connections">
+							<div className="followers">
+								<h3>Followers ({followers.length})</h3>
+								<ul>
+									{followers.map((follower, index) => (
+										<li key={index}>{follower}</li>
+									))}
+								</ul>
+							</div>
+							<div className="following">
+								<h3>Following ({following.length})</h3>
+								<ul>
+									{following.map((followed, index) => (
+										<li key={index}>{followed}</li>
+									))}
+								</ul>
+							</div>
+						</div>
+						<div className="posts">
+							<h2>Posts</h2>
+							{posts.map(
+								(post) =>
+									post && (
+										<Post
+											key={post.id}
+											post={post}
+											toggleLike={toggleLike}
+											comments={comments}
+											handleCommentAdded={handleCommentAdded}
+										/>
+									)
+							)}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -77,3 +77,22 @@
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 200;
 }
+
+/* Media query for narrow screens */
+@media (max-width: 768px) {
+	.leftPane {
+		width: 70px; /* Narrower width for icons only */
+	}
+
+	.leftMenuText {
+		display: none; /* Hide the text labels */
+	}
+
+	.leftPainIcons {
+		margin-right: 0; /* Remove the right margin */
+	}
+
+	.leftPainMenuItem {
+		justify-content: center; /* Center the icons */
+	}
+}

@@ -24,7 +24,7 @@ a {
 }
 
 .navBarRight {
-	flex: 3;
+	flex: 2;
 	display: flex;
 	align-items: center;
 	color: #fff;
@@ -87,8 +87,8 @@ a {
 .iconTag {
 	display: flex;
 	font-weight: bold;
-	width: 15px;
-	height: 15px;
+	width: 17px;
+	height: 17px;
 	background-color: red;
 	color: #fff;
 	position: absolute;
@@ -97,6 +97,7 @@ a {
 	align-items: flex-start;
 	margin-left: 15px;
 	margin-top: -30px;
+	font-size: small;
 }
 
 .notifications {

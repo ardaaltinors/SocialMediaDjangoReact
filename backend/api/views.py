@@ -37,7 +37,8 @@ class CurrentUserView(APIView):
         context.update({'request': self.request})
         return context
     
-    
+  
+# Feed API  
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created')
     serializer_class = PostSerializer
@@ -48,6 +49,18 @@ class PostViewSet(viewsets.ModelViewSet):
             serializer.save(user=self.request.user)
         else:
             print(serializer.errors)
+            
+            
+# Feed for the users that the current user follows
+class FollowingPostsView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        following_profiles = user.profile.following.all()
+        following_users = [profile.user for profile in following_profiles]
+        return Post.objects.filter(user__in=following_users).order_by('-created')
             
             
 class IsOwnerOrReadOnly(BasePermission):
@@ -113,6 +126,8 @@ class ToggleFollowView(APIView):
         target_user = get_object_or_404(User, pk=user_id)
         user_profile = request.user.profile
 
+        if target_user == request.user:
+            return Response({'detail': 'You cannot follow/unfollow yourself.'}, status=status.HTTP_400_BAD_REQUEST)
         if target_user.profile in user_profile.following.all():
             user_profile.following.remove(target_user.profile)
             return Response({'status': 'unfollowed'}, status=status.HTTP_200_OK)

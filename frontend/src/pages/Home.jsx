@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import api from "../api";
 import "../styles/Home.css";
 
@@ -14,11 +15,12 @@ function Home() {
 	const [image, setImage] = useState(null);
 	const [status, setStatus] = useState("");
 	const [comments, setComments] = useState({});
+	const location = useLocation();
 
 	useEffect(() => {
 		getPosts();
 		getCurrentUser();
-	}, []);
+	}, [location]); // Re-run the effect when the location changes
 
 	const getCurrentUser = () => {
 		api
@@ -31,8 +33,10 @@ function Home() {
 	};
 
 	const getPosts = () => {
+		const endpoint =
+			location.hash === "#following" ? "/api/following-posts/" : "/api/posts/";
 		api
-			.get("/api/posts/")
+			.get(endpoint)
 			.then((response) => response.data)
 			.then((posts) => {
 				setPosts(posts);
@@ -92,13 +96,9 @@ function Home() {
 		api
 			.post(`/api/posts/${postId}/toggle-like/`)
 			.then((response) => {
-				// Update the posts state with the updated likes count
 				const updatedPosts = posts.map((post) => {
 					if (post.id === postId) {
-						// Assuming response.data.likes_count is the updated count of likes
-						let data = { ...post, likes: response.data.likes_count };
-						console.log(data);
-						return data;
+						return { ...post, likes: response.data.likes_count };
 					}
 					return post;
 				});
