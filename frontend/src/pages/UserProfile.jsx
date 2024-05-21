@@ -16,48 +16,59 @@ function UserProfile() {
 	const [following, setFollowing] = useState([]);
 	const [posts, setPosts] = useState([]);
 	const [userId, setUserId] = useState(null);
-	const [currentUserId, setCurrentUserId] = useState(null);
-	const [isFollowing, setIsFollowing] = useState(false);
-
 	const [comments, setComments] = useState({});
+	const [isCurrentUserLoading, setIsCurrentUserLoading] = useState(true);
+
+	const [buttonText, setButtonText] = useState("Follow");
 
 	useEffect(() => {
 		getCurrentUser();
-		api
-			.get(`/api/profile/${username}/`)
-			.then((response) => {
-				const data = response.data;
-				setBio(data.bio || "");
-				setProfilePicture(data.profile_picture || "");
-				setCoverPhoto(data.cover_photo || "");
-				setFollowers(data.followers || []);
-				setFollowing(data.following || []);
-				setPosts(data.posts || []);
-				setUserId(data.id);
-				setCurrentUserId(data.current_user_id);
-				checkFollowStatus(data.followers);
-			})
-			.catch((error) => {
-				console.error("Error fetching profile data:", error);
-				alert("Error fetching profile data: " + error);
-			});
-		checkFollowStatus(followers);
-	}, [username]);
+	}, []);
 
-	const checkFollowStatus = (followersList) => {
-		const isFollowing = followersList.some(
-			(follower) => follower.id === currentUserId
-		);
-		setIsFollowing(isFollowing);
-	};
+	useEffect(() => {
+		if (!isCurrentUserLoading) {
+			api
+				.get(`/api/profile/${username}/`)
+				.then((response) => {
+					const data = response.data;
+					console.log(data);
+					setBio(data.bio || "");
+					setProfilePicture(data.profile_picture || "");
+					setCoverPhoto(data.cover_photo || "");
+					setFollowers(data.followers || []);
+					setFollowing(data.following || []);
+					setPosts(data.posts || []);
+					setUserId(data.id);
+					console.log(currentUser);
+				})
+				.catch((error) => {
+					console.error("Error fetching profile data:", error);
+					alert("Error fetching profile data: " + error);
+				});
+		}
+	}, [username, isCurrentUserLoading]);
+
+	useEffect(() => {
+		if (!isCurrentUserLoading) {
+			setButtonText(checkFollowStatus() ? "Unfollow" : "Follow");
+		}
+	}, [userId]);
 
 	const getCurrentUser = () => {
 		api
 			.get("/api/current-user/")
 			.then((response) => {
 				setCurrentUser(response.data);
+				setIsCurrentUserLoading(false);
 			})
-			.catch((error) => alert(error));
+			.catch((error) => {
+				alert(error);
+				setIsCurrentUserLoading(false);
+			});
+	};
+
+	const checkFollowStatus = () => {
+		return followers.includes(currentUser.username);
 	};
 
 	const toggleFollow = () => {
@@ -65,7 +76,12 @@ function UserProfile() {
 		api
 			.post(`/api/users/${userId}/toggle-follow/`)
 			.then((response) => {
-				setIsFollowing(response.data.status === "followed");
+				console.log(response.data.status);
+				if (response.data.status === "followed") {
+					setButtonText("Unfollow");
+				} else {
+					setButtonText("Follow");
+				}
 			})
 			.catch((error) => {
 				console.error("Error toggling follow status:", error);
@@ -117,7 +133,7 @@ function UserProfile() {
 						)}
 						<h1>{username}</h1>
 						<button onClick={toggleFollow} className="follow-button">
-							{isFollowing ? "Unfollow" : "Follow"}
+							{buttonText}
 						</button>
 						<p className="bio">{bio}</p>
 					</div>
