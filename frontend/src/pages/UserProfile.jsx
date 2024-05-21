@@ -41,6 +41,7 @@ function UserProfile() {
 				console.error("Error fetching profile data:", error);
 				alert("Error fetching profile data: " + error);
 			});
+		checkFollowStatus(followers);
 	}, [username]);
 
 	const checkFollowStatus = (followersList) => {
