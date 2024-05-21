@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import api from "../../api";
 import moment from "moment";
+import { getSinglePost } from "../../utils/getSinglePost";
 import "./Post.css";
 
 import likeImage from "../../assets/images/like.png";
 import CommentList from "./CommentList";
 import CreateComment from "./CreateComment";
 
-const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
+const Post = ({ post, comments, handleCommentAdded }) => {
 	const [isImageOpen, setIsImageOpen] = useState(false);
+	const [postLikeCount, setPostLikeCount] = useState(post.liked_by.length);
 
 	const handleImageClick = () => {
 		setIsImageOpen(true);
@@ -15,6 +18,17 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 
 	const closeImage = () => {
 		setIsImageOpen(false);
+	};
+
+	const toggleLike = async (post) => {
+		try {
+			await api.post(`/api/posts/${post.id}/toggle-like/`);
+			const updatedPost = await getSinglePost(post.id);
+			setPostLikeCount(updatedPost.liked_by.length);
+			console.log(postLikeCount);
+		} catch (error) {
+			console.error("Error toggling like:", error);
+		}
 	};
 
 	return (
@@ -27,7 +41,9 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 							alt="Profile Photo"
 							className="postImage"
 						/>
-						<span className="postUserName">{post.user.username}</span>
+						<a href={`/profile/${post.user.username}`}>
+							<span className="postUserName">{post.user.username}</span>
+						</a>
 						<span className="postTime">
 							{moment(post.created).fromNow()}
 							{/* {new Date(post.created).toLocaleString()} */}
@@ -50,7 +66,7 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 				<div className="postBottom">
 					<div className="postBottomLeft">
 						<button
-							onClick={() => toggleLike(post.id)}
+							onClick={() => toggleLike(post)}
 							style={{
 								background: "none",
 								border: "none",
@@ -60,7 +76,7 @@ const Post = ({ post, toggleLike, comments, handleCommentAdded }) => {
 						>
 							<img src={likeImage} alt="Like" className="reactionPic" />
 						</button>
-						<span className="likeCount">{post.liked_by.length}</span>
+						<span className="likeCount">{postLikeCount}</span>
 					</div>
 					<div className="postBottomRight">
 						<span className="commentCount">

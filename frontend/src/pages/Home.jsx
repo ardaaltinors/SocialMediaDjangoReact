@@ -7,6 +7,7 @@ import NavBar from "../components/Navigation/NavBar";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/CreatePost/CreatePost";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
+import { getSinglePost } from "../utils/getSinglePost";
 
 function Home() {
 	const [posts, setPosts] = useState([]);
@@ -92,23 +93,6 @@ function Home() {
 		setImage(e.target.files[0]);
 	};
 
-	const toggleLike = (postId) => {
-		api
-			.post(`/api/posts/${postId}/toggle-like/`)
-			.then((response) => {
-				const updatedPosts = posts.map((post) => {
-					if (post.id === postId) {
-						return { ...post, likes: response.data.likes_count };
-					}
-					return post;
-				});
-				setPosts(updatedPosts);
-			})
-			.catch((error) => {
-				console.error("Error toggling like:", error);
-			});
-	};
-
 	return (
 		<div>
 			<NavBar user={currentUser} />
@@ -129,7 +113,6 @@ function Home() {
 									<Post
 										key={post.id}
 										post={post}
-										toggleLike={toggleLike}
 										comments={comments}
 										handleCommentAdded={handleCommentAdded}
 									/>
