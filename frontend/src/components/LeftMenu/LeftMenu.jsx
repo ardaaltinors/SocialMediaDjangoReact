@@ -31,10 +31,12 @@ export default function LeftMenu() {
 						<span className="leftMenuText">Events</span>
 					</li>
 
-					<li className="leftPainMenuItem">
-						<BuildIcon className="leftPainIcons" />
-						<span className="leftMenuText">Settings</span>
-					</li>
+					<a href="/edit-profile">
+						<li className="leftPainMenuItem">
+							<BuildIcon className="leftPainIcons" />
+							<span className="leftMenuText">Settings</span>
+						</li>
+					</a>
 
 					<li className="leftPainMenuItem">
 						<NewspaperIcon className="leftPainIcons" />

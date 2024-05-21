@@ -1,0 +1,67 @@
+/* ProfileEdit.css */
+.profile-edit-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+}
+
+.profile-edit-container {
+	max-width: 600px;
+	width: 100%;
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+.profile-edit-container h1 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.profile-edit-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.profile-edit-form label {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.profile-edit-form input,
+.profile-edit-form textarea,
+.profile-edit-form select {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.profile-edit-form input[type="file"] {
+	padding: 5px;
+}
+
+.profile-edit-form button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.profile-edit-form button:hover {
+	background-color: #0056b3;
+}
+
+.profile-edit-status {
+	text-align: center;
+	margin-top: 10px;
+	color: green;
+}
