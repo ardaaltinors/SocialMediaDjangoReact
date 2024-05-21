@@ -21,6 +21,8 @@ function UserProfile() {
 
 	const [buttonText, setButtonText] = useState("Follow");
 
+	document.title = `${username}'s Profile | GymCommunity`;
+
 	useEffect(() => {
 		getCurrentUser();
 	}, []);

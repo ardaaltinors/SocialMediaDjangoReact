@@ -19,7 +19,7 @@ export default function LeftMenu() {
 						</li>
 					</a>
 
-					<a href="#following">
+					<a href="/#following">
 						<li className="leftPainMenuItem">
 							<GroupIcon className="leftPainIcons" />
 							<span className="leftMenuText">Following</span>

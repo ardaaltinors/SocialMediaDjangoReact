@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import SinglePost from "./pages/SinglePost";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProfileEdit from "./pages/ProfileEdit";
@@ -29,6 +30,14 @@ function App() {
 						element={
 							<ProtectedRoute>
 								<Home />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/posts/:id"
+						element={
+							<ProtectedRoute>
+								<SinglePost />
 							</ProtectedRoute>
 						}
 					/>

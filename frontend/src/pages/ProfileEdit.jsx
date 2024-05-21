@@ -22,6 +22,8 @@ function ProfileEdit() {
 
 	const navigate = useNavigate();
 
+	document.title = "Edit Profile - GymUnity";
+
 	useEffect(() => {
 		getCurrentUser();
 		api

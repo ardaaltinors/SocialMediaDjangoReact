@@ -14,13 +14,18 @@ function Home() {
 	const [currentUser, setCurrentUser] = useState([]);
 	const [caption, setCaption] = useState("");
 	const [image, setImage] = useState(null);
-	const [status, setStatus] = useState("");
 	const [comments, setComments] = useState({});
 	const location = useLocation();
 
 	useEffect(() => {
 		getPosts();
 		getCurrentUser();
+
+		if (location.hash === "#following") {
+			document.title = "Following - GymUnity";
+		} else {
+			document.title = "Home - GymUnity";
+		}
 	}, [location]); // Re-run the effect when the location changes
 
 	const getCurrentUser = () => {
