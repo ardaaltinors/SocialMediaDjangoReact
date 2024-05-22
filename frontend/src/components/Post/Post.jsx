@@ -45,8 +45,10 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 							<span className="postUserName">{post.user.username}</span>
 						</a>
 						<span className="postTime">
-							{moment(post.created).fromNow()}
-							{/* {new Date(post.created).toLocaleString()} */}
+							<a href={`/posts/${post.id}`}>
+								{moment(post.created).fromNow()}
+								{/* {new Date(post.created).toLocaleString()} */}
+							</a>
 						</span>
 					</div>
 				</div>
@@ -79,18 +81,25 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 						<span className="likeCount">{postLikeCount}</span>
 					</div>
 					<div className="postBottomRight">
-						<span className="commentCount">
-							{comments[post.id] ? comments[post.id].length : 0} comments
-						</span>
+						{comments !== "disabled" && (
+							<span className="commentCount">
+								{comments[post.id] ? comments[post.id].length : 0} comments
+							</span>
+						)}
 					</div>
 				</div>
-				<CommentList comments={comments[post.id] || []} />
-				<CreateComment
-					postId={post.id}
-					onCommentAdded={(newComment) =>
-						handleCommentAdded(post.id, newComment)
-					}
-				/>
+
+				{comments !== "disabled" && (
+					<>
+						<CommentList comments={comments[post.id] || comments || []} />
+						<CreateComment
+							postId={post.id}
+							onCommentAdded={(newComment) =>
+								handleCommentAdded(post.id, newComment)
+							}
+						/>
+					</>
+				)}
 			</div>
 			{isImageOpen && (
 				<div className="imageModal" onClick={closeImage}>

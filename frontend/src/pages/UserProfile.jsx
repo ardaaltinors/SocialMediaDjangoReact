@@ -167,7 +167,7 @@ function UserProfile() {
 											key={post.id}
 											post={post}
 											toggleLike={toggleLike}
-											comments={comments}
+											comments={"disabled"}
 											handleCommentAdded={handleCommentAdded}
 										/>
 									)

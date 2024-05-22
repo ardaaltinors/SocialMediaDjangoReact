@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../api";
 import "../styles/Home.css";
 
@@ -9,7 +8,7 @@ import Post from "../components/Post/Post";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import LoadingIndicator from "../components/LoadingIndicator";
 
-function Home() {
+function SinglePost() {
 	const { id } = useParams(); // Get post ID from URL parameters
 	const [post, setPost] = useState(null);
 	const [currentUser, setCurrentUser] = useState(null);
@@ -22,35 +21,38 @@ function Home() {
 		getCommentsForPost(id);
 	}, [id]);
 
-	const getCurrentUser = () => {
-		api
-			.get("/api/current-user/")
-			.then((response) => {
-				setCurrentUser(response.data);
-			})
-			.catch((error) => alert(error));
+	const getCurrentUser = async () => {
+		setIsLoading(true);
+		try {
+			const response = await api.get("/api/current-user/");
+			setCurrentUser(response.data);
+		} catch (error) {
+			alert(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const getSinglePost = async (postId) => {
+		setIsLoading(true);
 		try {
 			const response = await api.get(`/api/posts/${postId}/`);
 			setPost(response.data);
 			console.log(response.data);
 		} catch (error) {
 			alert(`Error fetching post: ${error}`);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
-	const getCommentsForPost = (postId) => {
-		setIsLoading(true);
-		api
-			.get(`/api/comments/post/${postId}/`)
-			.then((response) => response.data)
-			.then((data) => {
-				setComments((prev) => ({ ...prev, [postId]: data }));
-				setIsLoading(false);
-			})
-			.catch((error) => alert(`Error fetching comments: ${error}`));
+	const getCommentsForPost = async (postId) => {
+		try {
+			const response = await api.get(`/api/comments/post/${postId}/`);
+			setComments((prev) => ({ ...prev, [postId]: response.data }));
+		} catch (error) {
+			alert(`Error fetching comments: ${error}`);
+		}
 	};
 
 	const handleCommentAdded = (postId, newComment) => {
@@ -60,8 +62,10 @@ function Home() {
 		}));
 	};
 
-	if (!post || !currentUser) {
-		return <div>Loading...</div>;
+	document.title = `${currentUser?.username}'s: ${post?.caption}`;
+
+	if (isLoading || !post || !currentUser || !comments[id]) {
+		return <LoadingIndicator />;
 	}
 
 	return (
@@ -69,17 +73,14 @@ function Home() {
 			<NavBar user={currentUser} />
 			<div id="mainContainer">
 				<div className="content">
-					{isLoading && LoadingIndicator()}
-					{!isLoading && (
-						<div className="posts">
-							<Post
-								key={post.id}
-								post={post}
-								comments={comments[post.id] || []}
-								handleCommentAdded={handleCommentAdded}
-							/>
-						</div>
-					)}
+					<div className="posts">
+						<Post
+							key={post.id}
+							post={post}
+							comments={comments[id]}
+							handleCommentAdded={handleCommentAdded}
+						/>
+					</div>
 				</div>
 			</div>
 			<LeftMenu />
@@ -87,4 +88,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default SinglePost;

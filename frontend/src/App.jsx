@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ProfileEdit from "./pages/ProfileEdit";
 import UserProfile from "./pages/UserProfile";
 import Test from "./pages/Test";
+import GymAssistant from "./pages/GymAssistant";
 
 function Logout() {
 	localStorage.clear();
@@ -46,6 +47,14 @@ function App() {
 						element={
 							<ProtectedRoute>
 								<ProfileEdit />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/gym-assistant"
+						element={
+							<ProtectedRoute>
+								<GymAssistant />
 							</ProtectedRoute>
 						}
 					/>
