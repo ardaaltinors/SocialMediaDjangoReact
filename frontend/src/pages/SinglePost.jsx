@@ -79,6 +79,7 @@ function SinglePost() {
 							post={post}
 							comments={comments[id]}
 							handleCommentAdded={handleCommentAdded}
+							currentUser={currentUser}
 						/>
 					</div>
 				</div>

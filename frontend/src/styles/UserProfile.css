@@ -48,8 +48,37 @@
 	cursor: pointer;
 }
 
+.profile-controls {
+	display: flex;
+	align-items: center;
+}
+
 .follow-button:hover {
 	background-color: #0056b3;
+}
+
+.logout-button {
+	background-color: #ff000086;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 124px;
+}
+
+.edit-button {
+	background-color: #0056b3;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 120px;
+}
+
+.logout-button:hover {
+	background-color: #ff0000 !important;
 }
 
 .bio {
@@ -65,13 +94,14 @@
 	margin: 20px 0;
 }
 
-.connections h3 {
-	margin-bottom: 10px;
+.followers,
+.following {
+	cursor: pointer;
 }
 
-.connections ul {
-	list-style: none;
-	padding: 0;
+ul a {
+	text-decoration: none;
+	color: #000;
 }
 
 .posts {
