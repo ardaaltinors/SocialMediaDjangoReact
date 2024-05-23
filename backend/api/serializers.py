@@ -20,9 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
     
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    
     class Meta:
         model = Post
-        fields = ['id', 'user', 'image', 'caption', 'created', 'liked_by']
+        fields = ['id', 'user', 'image', 'video', 'caption', 'created', 'liked_by']
         read_only_fields = ['id', 'created', 'liked_by']
         
         
