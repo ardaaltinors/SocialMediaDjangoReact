@@ -27,6 +27,7 @@
 	border-radius: 50%;
 	object-fit: cover;
 }
+
 .postTop {
 	display: flex;
 	align-items: center;
@@ -39,6 +40,24 @@
 	display: flex;
 	align-items: center;
 	margin-top: 10px;
+}
+
+.postTopRight {
+	margin-left: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.deleteIcon {
+	cursor: pointer;
+	color: #3b579dbb;
+}
+
+.deleteConfirmation {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 }
 
 .postUserName {
@@ -65,7 +84,7 @@
 
 .postedImage {
 	max-width: 100%;
-	max-height: 80vh;
+	max-height: 60vh;
 	object-fit: contain;
 	border-radius: 8px;
 }

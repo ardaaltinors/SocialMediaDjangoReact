@@ -9,6 +9,7 @@ const CreatePost = ({
 	handleCaptionChange,
 	handleImageChange,
 	caption,
+	status,
 }) => {
 	return (
 		<div className="addPost">
@@ -45,11 +46,15 @@ const CreatePost = ({
 								style={{ display: "none" }} // Hide the default file input
 							/>
 						</div>
+						{status && (
+							<div>
+								<p>{status}</p>
+							</div>
+						)}
 
 						<button className="postButton">Post</button>
 					</div>
 				</div>
-				{status && <p>{status}</p>}
 			</form>
 		</div>
 	);

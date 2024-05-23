@@ -7,7 +7,6 @@ import NavBar from "../components/Navigation/NavBar";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/CreatePost/CreatePost";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
-import { getSinglePost } from "../utils/getSinglePost";
 
 function Home() {
 	const [posts, setPosts] = useState([]);
@@ -15,6 +14,7 @@ function Home() {
 	const [caption, setCaption] = useState("");
 	const [image, setImage] = useState(null);
 	const [comments, setComments] = useState({});
+	const [status, setStatus] = useState("");
 	const location = useLocation();
 
 	useEffect(() => {
@@ -101,7 +101,8 @@ function Home() {
 	return (
 		<div>
 			<NavBar user={currentUser} />
-			<div id="mainContainer">
+			<LeftMenu />
+			<div>
 				<div className="content">
 					<CreatePost
 						user={currentUser}
@@ -109,6 +110,7 @@ function Home() {
 						handleCaptionChange={handleCaptionChange}
 						handleImageChange={handleImageChange}
 						caption={caption}
+						status={status}
 					/>
 
 					<div className="posts">
@@ -120,13 +122,13 @@ function Home() {
 										post={post}
 										comments={comments}
 										handleCommentAdded={handleCommentAdded}
+										currentUser={currentUser}
 									/>
 								)
 						)}
 					</div>
 				</div>
 			</div>
-			<LeftMenu />
 		</div>
 	);
 }

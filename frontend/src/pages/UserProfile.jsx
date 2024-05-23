@@ -169,6 +169,7 @@ function UserProfile() {
 											toggleLike={toggleLike}
 											comments={"disabled"}
 											handleCommentAdded={handleCommentAdded}
+											currentUser={currentUser}
 										/>
 									)
 							)}

@@ -1,5 +1,5 @@
 .content {
 	flex-grow: 1;
-	margin: 0 220px; /* Adjust based on the width of your left menu */
+	margin: 0 220px;
 	padding: 20px;
 }

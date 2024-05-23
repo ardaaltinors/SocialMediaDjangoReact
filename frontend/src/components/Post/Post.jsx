@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import api from "../../api";
 import moment from "moment";
 import { getSinglePost } from "../../utils/getSinglePost";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 import "./Post.css";
 
 import likeImage from "../../assets/images/like.png";
 import CommentList from "./CommentList";
 import CreateComment from "./CreateComment";
 
-const Post = ({ post, comments, handleCommentAdded }) => {
+const Post = ({ post, comments, handleCommentAdded, currentUser }) => {
 	const [isImageOpen, setIsImageOpen] = useState(false);
 	const [postLikeCount, setPostLikeCount] = useState(post.liked_by.length);
+	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
 	const handleImageClick = () => {
 		setIsImageOpen(true);
@@ -31,6 +35,15 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 		}
 	};
 
+	const handleDeletePost = async () => {
+		try {
+			await api.delete(`/api/posts/${post.id}/`);
+			window.location.reload();
+		} catch (error) {
+			console.error("Error deleting post:", error);
+		}
+	};
+
 	return (
 		<div key={post.id} className="post">
 			<div className="postContainer">
@@ -45,14 +58,40 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 							<span className="postUserName">{post.user.username}</span>
 						</a>
 						<span className="postTime">
-							<a href={`/posts/${post.id}`}>
-								{moment(post.created).fromNow()}
-								{/* {new Date(post.created).toLocaleString()} */}
-							</a>
+							<a href={`/posts/${post.id}`}>{moment(post.created).fromNow()}</a>
 						</span>
 					</div>
+					<div className="postTopRight">
+						{currentUser.id === post.user.id && (
+							<>
+								{showDeleteConfirmation ? (
+									<div className="deleteConfirmation">
+										<Button
+											variant="contained"
+											color="secondary"
+											onClick={handleDeletePost}
+										>
+											Confirm Delete
+										</Button>
+										<Button
+											variant="contained"
+											onClick={() => setShowDeleteConfirmation(false)}
+										>
+											Cancel
+										</Button>
+									</div>
+								) : (
+									<Tooltip title="Delete Post" arrow>
+										<DeleteIcon
+											onClick={() => setShowDeleteConfirmation(true)}
+											className="deleteIcon"
+										/>
+									</Tooltip>
+								)}
+							</>
+						)}
+					</div>
 				</div>
-
 				<div className="postCenter">
 					<div className="postCaption">{post.caption}</div>
 					<center>
@@ -64,7 +103,6 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 						/>
 					</center>
 				</div>
-
 				<div className="postBottom">
 					<div className="postBottomLeft">
 						<button
@@ -88,7 +126,6 @@ const Post = ({ post, comments, handleCommentAdded }) => {
 						)}
 					</div>
 				</div>
-
 				{comments !== "disabled" && (
 					<>
 						<CommentList comments={comments[post.id] || comments || []} />
