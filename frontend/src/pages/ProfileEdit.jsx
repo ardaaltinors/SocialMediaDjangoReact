@@ -119,83 +119,90 @@ function ProfileEdit() {
 	return (
 		<div>
 			<NavBar user={currentUser} />
-			<div className="profile-edit-page">
-				<h1>Edit Profile</h1>
-				<div className="profile-edit-container">
-					<form className="profile-edit-form" onSubmit={handleProfileSubmit}>
-						<div>
-							<label htmlFor="bio">Bio:</label>
-							<textarea id="bio" value={bio} onChange={handleBioChange} />
-						</div>
-						<div>
-							<label htmlFor="gender">Gender:</label>
-							<select id="gender" value={gender} onChange={handleGenderChange}>
-								<option value="">Select Gender</option>
-								<option value="M">Male</option>
-								<option value="F">Female</option>
-								<option value="O">Other</option>
-							</select>
-						</div>
-						<div>
-							<label htmlFor="height">Height (cm):</label>
-							<input
-								type="number"
-								id="height"
-								value={height}
-								onChange={handleHeightChange}
-							/>
-						</div>
-						<div>
-							<label htmlFor="weight">Weight (kg):</label>
-							<input
-								type="number"
-								id="weight"
-								value={weight}
-								onChange={handleWeightChange}
-							/>
-						</div>
-						<div>
-							<label htmlFor="goal">Goal:</label>
-							<select id="goal" value={goal} onChange={handleGoalChange}>
-								<option value="">Select Goal</option>
-								<option value="maintain">Maintain Weight</option>
-								<option value="gain">Gain Weight</option>
-								<option value="lose">Lose Weight</option>
-							</select>
-						</div>
-						<div>
-							<label htmlFor="date_of_birth">Date of Birth:</label>
-							<input
-								type="date"
-								id="date_of_birth"
-								value={dateOfBirth}
-								onChange={handleDateOfBirthChange}
-							/>
-						</div>
-						<div>
-							<label htmlFor="profile_picture">Profile Picture:</label>
-							<input
-								type="file"
-								id="profile_picture"
-								accept="image/*"
-								onChange={handleProfilePictureChange}
-							/>
-						</div>
-						<div>
-							<label htmlFor="cover_photo">Cover Photo:</label>
-							<input
-								type="file"
-								id="cover_photo"
-								accept="image/*"
-								onChange={handleCoverPhotoChange}
-							/>
-						</div>
-						<button type="submit">Update Profile</button>
-					</form>
-					{status && <p className="profile-edit-status">{status}</p>}
+			<div className="flex-menu-content">
+				<LeftMenu />
+
+				<div className="profile-edit-page">
+					<h1>Edit Profile</h1>
+					<div className="profile-edit-container">
+						<form className="profile-edit-form" onSubmit={handleProfileSubmit}>
+							<div>
+								<label htmlFor="bio">Bio:</label>
+								<textarea id="bio" value={bio} onChange={handleBioChange} />
+							</div>
+							<div>
+								<label htmlFor="gender">Gender:</label>
+								<select
+									id="gender"
+									value={gender}
+									onChange={handleGenderChange}
+								>
+									<option value="">Select Gender</option>
+									<option value="M">Male</option>
+									<option value="F">Female</option>
+									<option value="O">Other</option>
+								</select>
+							</div>
+							<div>
+								<label htmlFor="height">Height (cm):</label>
+								<input
+									type="number"
+									id="height"
+									value={height}
+									onChange={handleHeightChange}
+								/>
+							</div>
+							<div>
+								<label htmlFor="weight">Weight (kg):</label>
+								<input
+									type="number"
+									id="weight"
+									value={weight}
+									onChange={handleWeightChange}
+								/>
+							</div>
+							<div>
+								<label htmlFor="goal">Goal:</label>
+								<select id="goal" value={goal} onChange={handleGoalChange}>
+									<option value="">Select Goal</option>
+									<option value="maintain">Maintain Weight</option>
+									<option value="gain">Gain Weight</option>
+									<option value="lose">Lose Weight</option>
+								</select>
+							</div>
+							<div>
+								<label htmlFor="date_of_birth">Date of Birth:</label>
+								<input
+									type="date"
+									id="date_of_birth"
+									value={dateOfBirth}
+									onChange={handleDateOfBirthChange}
+								/>
+							</div>
+							<div>
+								<label htmlFor="profile_picture">Profile Picture:</label>
+								<input
+									type="file"
+									id="profile_picture"
+									accept="image/*"
+									onChange={handleProfilePictureChange}
+								/>
+							</div>
+							<div>
+								<label htmlFor="cover_photo">Cover Photo:</label>
+								<input
+									type="file"
+									id="cover_photo"
+									accept="image/*"
+									onChange={handleCoverPhotoChange}
+								/>
+							</div>
+							<button type="submit">Update Profile</button>
+						</form>
+						{status && <p className="profile-edit-status">{status}</p>}
+					</div>
 				</div>
 			</div>
-			<LeftMenu />
 		</div>
 	);
 }

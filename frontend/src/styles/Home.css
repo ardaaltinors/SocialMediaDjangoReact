@@ -1,5 +1,9 @@
 .content {
 	flex-grow: 1;
-	margin: 0 220px;
 	padding: 20px;
+}
+
+.flex-menu-content {
+	display: flex;
+	justify-content: space-between;
 }

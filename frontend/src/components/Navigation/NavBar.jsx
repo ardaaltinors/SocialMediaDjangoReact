@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { fetchNotifications } from "../../utils/notificationUtils";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Notifications from "../Notifications/Notifications";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import "./navbar.css";
 import Search from "./Search/Search";
 
 function NavBar({ user }) {
 	const [showNotifications, setShowNotifications] = useState(false);
 	const [notifications, setNotifications] = useState([]);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	useEffect(() => {
 		const initFetch = async () => {
@@ -18,6 +21,7 @@ function NavBar({ user }) {
 	}, []);
 
 	const toggleNotifications = () => setShowNotifications(!showNotifications);
+	const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
 	return (
 		<div className="navBarBox">
@@ -43,8 +47,18 @@ function NavBar({ user }) {
 						/>
 					</a>
 				</div>
+				<div className="mobileMenuIcon" onClick={toggleMobileMenu}>
+					{isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+				</div>
 			</div>
 			{showNotifications && <Notifications />}
+			{isMobileMenuOpen && (
+				<div className="mobileMenu">
+					<div className="mobileMenuItem">
+						<Search />
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

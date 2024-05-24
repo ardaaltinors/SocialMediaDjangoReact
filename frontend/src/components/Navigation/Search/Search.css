@@ -1,4 +1,5 @@
 .searchComponent {
+	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -22,7 +23,6 @@
 
 .searchIcon {
 	color: #aaa;
-	padding-left: 10px;
 }
 
 .searchInput {
@@ -168,4 +168,7 @@ button:hover:not(:disabled) {
 		left: 5%;
 		transform: translateY(-50%);
 	}
+}
+
+@media (max-width: 768px) {
 }

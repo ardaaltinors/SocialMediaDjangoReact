@@ -1,9 +1,9 @@
 .leftPane {
-	position: fixed;
-	top: 70px; /* Adjust based on the height of your navbar */
+	position: sticky;
+	top: 40px; /* Adjust based on the height of your navbar */
 	left: 0;
 	width: 200px; /* Adjust width as needed */
-	height: calc(100% - 70px); /* Adjust based on the height of your navbar */
+	height: 100vh;
 	overflow-y: auto; /* Add scroll if content is taller than the screen */
 	background-color: #f8f9fa; /* Background color to match your theme */
 	border-right: 1px solid #ddd; /* Optional border for better separation */

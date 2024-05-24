@@ -117,8 +117,8 @@ function Home() {
 	return (
 		<div>
 			<NavBar user={currentUser} />
-			<LeftMenu />
-			<div>
+			<div className="flex-menu-content">
+				<LeftMenu />
 				<div className="content">
 					<CreatePost
 						user={currentUser}

@@ -1,11 +1,12 @@
 .profile-page {
 	display: flex;
+	justify-content: space-between;
 }
 
 .profile-container {
-	flex-grow: 1;
-	margin-left: 220px;
+	width: 100%;
 	font-family: Arial, sans-serif;
+	padding: 10px;
 }
 
 .profile-content {

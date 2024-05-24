@@ -1,8 +1,13 @@
-/* ProfileEdit.css */
+.flex-menu-content {
+	display: flex;
+	justify-content: space-between;
+}
+
 .profile-edit-page {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 	padding: 20px;
 	font-family: Arial, sans-serif;
 }
