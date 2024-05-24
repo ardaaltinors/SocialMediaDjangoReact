@@ -7,13 +7,14 @@ const CreatePost = ({
 	user,
 	createPost,
 	handleCaptionChange,
-	handleImageChange,
+	handleFileChange,
 	caption,
 	status,
+	uploadProgress,
 }) => {
 	return (
 		<div className="addPost">
-			<form onSubmit={createPost}>
+			<form onSubmit={createPost} encType="multipart/form-data">
 				<div className="addPostContainer">
 					<div className="addPostTop">
 						<img
@@ -32,7 +33,7 @@ const CreatePost = ({
 					<hr className="hrLine" />
 					<div className="addPostBottom">
 						<div className="addPostOptions">
-							<label htmlFor="image">
+							<label htmlFor="file">
 								<IconButton component="span">
 									<InsertPhotoIcon htmlColor="#3b579d" className="addPhoto" />
 								</IconButton>
@@ -40,18 +41,28 @@ const CreatePost = ({
 							</label>
 							<input
 								type="file"
-								id="image"
-								accept="image/*"
-								onChange={handleImageChange}
+								id="file"
+								accept="image/*,video/*"
+								onChange={handleFileChange}
 								style={{ display: "none" }} // Hide the default file input
 							/>
 						</div>
+						{uploadProgress > 0 && (
+							<div className="uploadProgress">
+								<p>Uploading: {uploadProgress}%</p>
+								<div className="progressBar">
+									<div
+										className="progress"
+										style={{ width: `${uploadProgress}%` }}
+									></div>
+								</div>
+							</div>
+						)}
 						{status && (
 							<div>
 								<p>{status}</p>
 							</div>
 						)}
-
 						<button className="postButton">Post</button>
 					</div>
 				</div>

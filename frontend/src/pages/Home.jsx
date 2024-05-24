@@ -12,7 +12,8 @@ function Home() {
 	const [posts, setPosts] = useState([]);
 	const [currentUser, setCurrentUser] = useState([]);
 	const [caption, setCaption] = useState("");
-	const [image, setImage] = useState(null);
+	const [file, setFile] = useState(null);
+	const [uploadProgress, setUploadProgress] = useState(0);
 	const [comments, setComments] = useState({});
 	const [status, setStatus] = useState("");
 	const location = useLocation();
@@ -73,20 +74,35 @@ function Home() {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("caption", caption);
-		formData.append("image", image);
+
+		if (file) {
+			if (file.type.startsWith("image/")) {
+				formData.append("image", file);
+			} else if (file.type.startsWith("video/")) {
+				formData.append("video", file);
+			}
+		}
 
 		try {
 			await api.post("/api/posts/", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
+				onUploadProgress: (progressEvent) => {
+					const percentCompleted = Math.round(
+						(progressEvent.loaded * 100) / progressEvent.total
+					);
+					setUploadProgress(percentCompleted);
+				},
 			});
 			setStatus("Success! Your post has been created.");
 			setCaption("");
-			setImage(null);
+			setFile(null);
+			setUploadProgress(0); // Reset progress
 			getPosts();
 		} catch (error) {
 			setStatus("Error: Unable to create post.");
+			setUploadProgress(0);
 		}
 	};
 
@@ -94,8 +110,8 @@ function Home() {
 		setCaption(e.target.value);
 	};
 
-	const handleImageChange = (e) => {
-		setImage(e.target.files[0]);
+	const handleFileChange = (e) => {
+		setFile(e.target.files[0]);
 	};
 
 	return (
@@ -108,9 +124,10 @@ function Home() {
 						user={currentUser}
 						createPost={createPost}
 						handleCaptionChange={handleCaptionChange}
-						handleImageChange={handleImageChange}
+						handleFileChange={handleFileChange}
 						caption={caption}
 						status={status}
+						uploadProgress={uploadProgress}
 					/>
 
 					<div className="posts">

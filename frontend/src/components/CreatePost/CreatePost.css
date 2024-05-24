@@ -27,6 +27,7 @@
 .addpostInput {
 	border: none;
 	width: 80%;
+	padding: 20px;
 	margin-left: 10px;
 }
 .addpostInput:focus {
@@ -34,7 +35,7 @@
 }
 
 .addPostOptionText {
-	padding-left: 7px;
+	padding-left: 1px;
 }
 .hrLine {
 	margin: 10px;
@@ -63,4 +64,21 @@
 	background-color: #365fc5;
 	color: white;
 	cursor: pointer;
+}
+
+.uploadProgress {
+	margin-top: 10px;
+}
+
+.progressBar {
+	width: 100%;
+	background-color: #e0e0e0;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.progress {
+	height: 5px;
+	background-color: #3b579d;
+	transition: width 0.4s ease;
 }

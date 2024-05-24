@@ -1,34 +1,30 @@
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import magic
 
 def validate_image_size(image):
-    if not image:
-        return
-    
     max_size_kb = 5120  # 5 MB
     if image.size > max_size_kb * 1024:
         raise ValidationError(f"Max image size is {max_size_kb} KB!")
-    
-# def validate_video(video):
-#     valid_mime_types = ['video/mp4', 'video/avi', 'video/mov']
-#     file_mime_type = magic.from_buffer(video.read(1024), mime=True)
-#     if file_mime_type not in valid_mime_types:
-#         raise ValidationError('Unsupported file type. Only MP4, AVI, and MOV are supported.')
 
+def validate_video(video):
+    valid_mime_types = ['video/mp4', 'video/avi', 'video/quicktime', 'video/mov']
+    mime = magic.Magic(mime=True)
+    file_mime_type = mime.from_buffer(video.read(1024))
+    if file_mime_type not in valid_mime_types:
+        raise ValidationError('Unsupported file type. Only MP4, AVI, and MOV are supported.')
 
-# models.py
-from django.db import models
-from django.conf import settings
 
 def get_default_profile_picture():
     return 'profile_pics/default.jpeg'
 
 def get_default_cover_photo():
     return 'cover_pics/default.webp'
+
 
 class Profile(models.Model):
     GENDER_CHOICES = [
@@ -62,8 +58,8 @@ class Profile(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/%Y/%m/%d', validators=[validate_image_size], blank=True, null=True)
-    video = models.FileField(upload_to='videos/%Y/%m/%d', blank=True, null=True)
-    caption = models.TextField(blank=True)
+    video = models.FileField(upload_to='videos/%Y/%m/%d', validators=[validate_video], blank=True, null=True)
+    caption = models.TextField(blank=False, validators=[MinLengthValidator(1)])
     created = models.DateTimeField(auto_now_add=True)
     liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='posts_liked', blank=True)
 

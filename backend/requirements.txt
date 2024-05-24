@@ -11,3 +11,4 @@ python-dotenv
 pillow
 channels
 channels_redis
+python-magic

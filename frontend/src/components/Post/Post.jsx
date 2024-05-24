@@ -95,12 +95,17 @@ const Post = ({ post, comments, handleCommentAdded, currentUser }) => {
 				<div className="postCenter">
 					<div className="postCaption">{post.caption}</div>
 					<center>
-						<img
-							src={post.image}
-							alt=""
-							className="postedImage"
-							onClick={handleImageClick}
-						/>
+						{post.video && (
+							<video src={post.video} alt="" className="postedVideo" controls />
+						)}
+						{post.image && (
+							<img
+								src={post.image}
+								alt=""
+								className="postedImage"
+								onClick={handleImageClick}
+							/>
+						)}
 					</center>
 				</div>
 				<div className="postBottom">
