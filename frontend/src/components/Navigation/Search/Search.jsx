@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../../../api";
 import SearchIcon from "@mui/icons-material/Search";
+import MovieIcon from "@mui/icons-material/Movie";
 import "./Search.css";
 import LoadingIndicator from "../../LoadingIndicator";
 
@@ -80,7 +81,16 @@ function Search() {
 					))}
 					{results.posts.map((post) => (
 						<div key={post.id} className="postResult resultItem">
-							<img src={post.image} alt="Post image" className="resultImage" />
+							{post.image && (
+								<img
+									src={post.image}
+									alt="Post image"
+									className="resultImage"
+								/>
+							)}
+							{post.video && (
+								<MovieIcon className="resultImage" fontSize="large" />
+							)}
 							<a href={`/posts/${post.id}`}>
 								<div className="resultInfo">
 									<h4>{post.caption}</h4>

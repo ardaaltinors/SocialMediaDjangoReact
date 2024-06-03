@@ -71,7 +71,8 @@ function SinglePost() {
 	return (
 		<div>
 			<NavBar user={currentUser} />
-			<div id="mainContainer">
+			<div className="flex-menu-content">
+				<LeftMenu />
 				<div className="content">
 					<div className="posts">
 						<Post
@@ -84,7 +85,6 @@ function SinglePost() {
 					</div>
 				</div>
 			</div>
-			<LeftMenu />
 		</div>
 	);
 }
