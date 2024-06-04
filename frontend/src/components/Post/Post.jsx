@@ -5,7 +5,7 @@ import { getSinglePost } from "../../utils/getSinglePost";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
-import "./Post.css";
+import "./PostStyle.css";
 
 import likeImage from "../../assets/images/like.png";
 import CommentList from "./CommentList";

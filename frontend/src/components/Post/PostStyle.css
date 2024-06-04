@@ -113,10 +113,12 @@
 	display: flex;
 	align-items: center;
 }
+
 .likeCount {
 	margin-left: 5px;
 	font-size: 15px;
 }
+
 .commentCount {
 	margin-right: 10px;
 	cursor: pointer;
