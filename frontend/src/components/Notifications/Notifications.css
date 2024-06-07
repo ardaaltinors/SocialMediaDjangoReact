@@ -32,6 +32,10 @@
 	margin-left: 10px;
 }
 
+.notification-content .date {
+	color: rgba(43, 31, 31, 0.484);
+}
+
 .notification-status .read {
 	color: green;
 }

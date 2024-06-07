@@ -40,13 +40,13 @@ function Notifications() {
 									{/* {new Date(notification.created_at).toLocaleString()} */}
 								</p>
 							</div>
-							<div className="notification-status">
+							{/* <div className="notification-status">
 								{notification.is_read ? (
 									<span className="read">Read</span>
 								) : (
 									<span className="unread">Unread</span>
 								)}
-							</div>
+							</div> */}
 						</div>
 					))}
 				</div>
