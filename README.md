@@ -24,7 +24,7 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 - Posts (Create, Read, Update, Delete)
 - Comments on posts
 - Like functionality for posts and comments
-- Notifications on new comments & follows
+- Realtime Websocket Notifications on new comments & follows
 - Responsive design
 
 ## Technologies Used
@@ -32,7 +32,7 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 - **Backend**: Django
 - **Frontend**: React
 - **Database**: SQLite (default, can be configured to use PostgreSQL or MySQL)
-- **Others**: Django REST Framework, Redux, Axios
+- **Others**: Django REST Framework, Axios, Channels
 
 ## Setup
 
@@ -40,61 +40,69 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 
 - Python 3.x
 - Node.js and npm
+- REDIS
 
 ### Backend Setup
 
 1. Clone the repository:
-   \```bash
+
+   ```bash
    git clone https://github.com/ardaaltinors/SocialMediaDjangoReact.git
    cd SocialMediaDjangoReact
-   \```
+   ```
 
 2. Create a virtual environment and activate it:
-   \```bash
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   \```
+
+   ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
 
 3. Install the backend dependencies:
-   \```bash
+
+   ```bash
    pip install -r requirements.txt
-   \```
+   ```
 
 4. Apply the migrations:
-   \```bash
+
+   ```bash
    python manage.py migrate
-   \```
+   ```
 
 5. Create a superuser:
-   \```bash
+
+   ```bash
    python manage.py createsuperuser
-   \```
+   ```
 
 6. Run the development server:
-   \```bash
+   ```bash
    python manage.py runserver
-   \```
+   ```
 
 ### Frontend Setup
 
 1. Navigate to the `frontend` directory:
-   \```bash
+
+   ```bash
    cd frontend
-   \```
+   ```
 
 2. Install the frontend dependencies:
-   \```bash
+
+   ```bash
    npm install
-   \```
+   ```
 
 3. Start the React development server:
-   \```bash
-   npm start
-   \```
+   ```bash
+   npm run preview
+   ```
 
 ## Usage
 
-Once both the backend and frontend servers are running, you can access the application at `http://localhost:3000` for the frontend and `http://localhost:8000` for the backend API.
+Once both the backend and frontend servers are running, you can access the application at `http://localhost:5173` for the frontend and `http://localhost:8000` for the backend API.
 
 ## Contributing
 
@@ -103,9 +111,9 @@ Contributions are welcome! Please follow these steps:
 1. Fork the repository
 2. Create a new branch (`git checkout -b feature-branch`)
 3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
+4. Push to the branch (`git push main feature-branch`)
 5. Create a pull request
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
