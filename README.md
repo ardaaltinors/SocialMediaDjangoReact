@@ -24,7 +24,7 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 - Posts (Create, Read, Update, Delete)
 - Comments on posts
 - Like functionality for posts and comments
-- Realtime Websocket Notifications on new comments & follows
+- Realtime Websocket Notifications on new comments & follows & likes
 - Responsive design
 
 ## Technologies Used
@@ -70,10 +70,10 @@ SocialMediaDjangoReact is a social media application that leverages the power of
    python manage.py migrate
    ```
 
-5. Create a superuser:
+5. Start Redis service (for WebSocket notifications):
 
    ```bash
-   python manage.py createsuperuser
+   brew services start redis #On MacOS
    ```
 
 6. Run the development server:
@@ -97,7 +97,7 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 
 3. Start the React development server:
    ```bash
-   npm run preview
+   npm run dev
    ```
 
 ## Usage
