@@ -1,14 +1,17 @@
-# Use an official node image as the base image
+# Stage 1: Build the application
 FROM node:18 AS build
 
 # Set the working directory
 WORKDIR /app
 
-# Set VITE_API_URL from environment variable (optional)
-ENV VITE_API_URL http://0.0.0.0:8000
-
 # Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Set build arguments
+ARG VITE_API_URL
+
+# Make build arguments available as environment variables
+ENV VITE_API_URL=${VITE_API_URL}
 
 # Install dependencies
 RUN npm install
@@ -18,7 +21,6 @@ COPY . .
 
 # Build the application
 RUN npm run build
-
 
 # Stage 2: Serve the app with a lightweight web server
 FROM nginx:alpine
