@@ -4,6 +4,9 @@ FROM node:18 AS build
 # Set the working directory
 WORKDIR /app
 
+# Set VITE_API_URL from environment variable (optional)
+ENV VITE_API_URL http://0.0.0.0:8000
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
@@ -16,9 +19,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
+
 # Stage 2: Serve the app with a lightweight web server
 FROM nginx:alpine
-
 
 # Copy the build output to replace the default nginx contents
 COPY --from=build /app/dist /usr/share/nginx/html
