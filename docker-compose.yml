@@ -12,10 +12,15 @@ services:
       - app-network
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://0.0.0.0:8000
     container_name: frontend
     ports:
       - "80:80"
+    environment:
+      - VITE_API_URL=http://0.0.0.0:8000
     depends_on:
       - backend
     networks:
