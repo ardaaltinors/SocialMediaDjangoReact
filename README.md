@@ -104,6 +104,20 @@ SocialMediaDjangoReact is a social media application that leverages the power of
 
 Once both the backend and frontend servers are running, you can access the application at `http://localhost:5173` for the frontend and `http://localhost:8000` for the backend API.
 
+## Easy Setup with Docker
+
+To simplify the development setup, you can use Docker and Docker Compose.
+
+To start the application using Docker Compose, follow these steps:
+
+- Ensure Docker and Docker Compose are installed on your system.
+- Navigate to the project root directory where the docker-compose.yml file is located.
+- Run the following command to build and start the containers:
+  ```bash
+  docker-compose up --build
+  ```
+- Access the frontend at `http://localhost` and the backend API at `http://localhost:8000`
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:

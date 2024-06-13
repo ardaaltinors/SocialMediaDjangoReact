@@ -12,10 +12,13 @@ def send_notification_on_comment(sender, instance, created, **kwargs):
     if created:
         post = instance.post
         recipient = post.user
+        if instance.user == recipient:
+            return
         comment_preview = instance.text[:24] if len(instance.text) > 24 else instance.text
         message = f"💬{instance.user.username} commented on your post: '{comment_preview}...'"
         Notification.objects.create(recipient=recipient, message=message)
         send_websocket_notification(recipient.id, message)
+
 
 @receiver(m2m_changed, sender=Post.liked_by.through)
 def send_notification_on_like(sender, instance, action, model, pk_set, **kwargs):
