@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Set build arguments
-ARG VITE_API_URL
+ARG VITE_API_URL=https://socialmediadjangoreact-gksynwoafq-ew.a.run.app/
 
 # Make build arguments available as environment variables
 ENV VITE_API_URL=${VITE_API_URL}
