@@ -1,6 +1,7 @@
-# SocialMediaDjangoReact
+# Social Media Website
 
-A social media application built with Django for the backend and React for the frontend.
+A full-stack Facebook clone / social media application built with Django and React.
+![Project Demo](docs/gymunity-introduction.gif)
 
 ## Table of Contents
 
